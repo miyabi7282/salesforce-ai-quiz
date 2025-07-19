@@ -48,33 +48,6 @@ if "q_id" in query_params:
     except Exception as e:
         st.warning(f"無効な問題IDです: {query_params['q_id']}")
 
-# スタイル
-st.markdown("""
-<style>
-    button.custom-btn {
-        width: 100%;
-        text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 6px;
-        margin-bottom: 4px;
-        border-radius: 4px;
-        border: 1px solid #DCDCDC;
-        color: black;
-        cursor: pointer;
-    }
-    .answered-btn {
-        background-color: #F0F2F6;
-        color: black;
-    }
-    .unanswered-btn {
-        background-color: #FFF8DC;
-        color: black;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 # --- ユーティリティ関数 ---
 def get_current_question():
     if st.session_state.current_index == -1:
@@ -135,16 +108,27 @@ with st.sidebar:
         q_id = q["question_id"]
         label = f"問 {q_id}: {q['question_text'][:30]}..."
         is_answered = q_id in st.session_state.answered_ids
-        btn_class = "answered-btn" if is_answered else "unanswered-btn"
 
-        st.markdown(
-            f"""
-            <form action="?q_id={q_id}" method="get">
-                <button class="custom-btn {btn_class}" type="submit">{label}</button>
-            </form>
-            """,
-            unsafe_allow_html=True
-        )
+        if st.button(label, key=f"sidebar_q_{q_id}"):
+            go_to_question_by_id(q_id)
+            st.query_params["q_id"] = str(q_id)
+            st.rerun()
+
+        # ボタンの色をカスタマイズ（JavaScript的にCSSで上書き）
+        st.markdown(f"""
+        <style>
+        div[data-testid="stButton"][key="sidebar_q_{q_id}"] button {{
+            background-color: {'#F0F2F6' if is_answered else '#FFF8DC'};
+            color: black;
+            width: 100%;
+            text-align: left;
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
 
 # --- メイン画面 ---
 st.title("Salesforce 資格試験 AIアシスタント")
