@@ -1,132 +1,145 @@
-
 import os
 import yaml
+import json
 from dotenv import load_dotenv
 import asyncio
 from tqdm.asyncio import tqdm_asyncio
+import re
+
+# お客様の元のimport文を完全に維持します
 from google import genai
 from google.genai import types
-import re # 差分処理のためにreをインポート
 
-# .envファイルから環境変数を読み込む
+# .envファイルから環境変数を読み込みます
 load_dotenv()
 
-# --- あなたの元の設定項目 (変更なし) ---
+# --- 設定項目 ---
+# お客様の元の設定をベースに、出力ファイルを不要なため削除
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-INPUT_FILE = "salesforce_exam_questions_final.yaml"
-OUTPUT_FILE = "undecided_questions_analysis_report.md"
+YAML_FILE = "salesforce_exam_questions_final.yaml"
 MAX_CONCURRENT_TASKS = 3
-MAX_QUESTIONS_TO_ANALYZE = 3
-
-# 【追加】分析済みIDを読み込むためのヘルパー関数
-def get_already_analyzed_ids(report_file):
-    analyzed_ids = set()
-    if not os.path.exists(report_file):
-        return analyzed_ids
-    with open(report_file, 'r', encoding='utf-8') as f:
-        content = f.read()
-    found_ids = re.findall(r'問題ID:\s*(\d+)', content)
-    analyzed_ids = {int(id_str) for id_str in found_ids}
-    return analyzed_ids
+MAX_QUESTIONS_TO_ANALYZE = 5
 
 async def analyze_with_gemini(client, question_data):
     """
-    自己修復型プロンプトを使用し、一度のAPIコールで
-    「原因分析→情報検索→再評価」のサイクルを完結させる
+    問題を分析し、マージに使用するai_analysisブロックをPythonの辞書として返す。
     """
-    # (あなたの元のコードから一切変更なし)
     q = question_data
+    # --- ★★★ お客様のアイデアを反映した、新しいJSON出力プロンプト ★★★ ---
     prompt = f"""
-あなたはSalesforce Data Cloudのトップエキスパート兼リサーチアナリストです。
-あなたのタスクは、以下の思考プロセスに従い、提供された【問題データ】を分析し、最終的な分析レポートを生成することです。
+あなたはSalesforce認定試験のエキスパートです。以下の【問題】と【候補ドキュメントリスト】を分析し、指示に従ってJSON形式で出力してください。
 
-# 思考プロセス
-1.  **初期評価:** まず、【問題データ】にある「RAGシステムの評価」を読み、なぜ「判断不能」と結論付けられたのか、その原因を推測します。正答を導くための鍵となる専門用語や概念を特定してください。
-2.  **知識の欠落特定:** 初期評価に基づき、正答を完全に裏付けるためにどのような情報が欠けているかを明確にしてください。
-3.  **ウェブ検索の実行（あなたの能力）:** 特定した欠落知識を補うため、あなたの持つGoogle検索能力を最大限に活用し、最も信頼できるSalesforceの公式ドキュメント（ヘルプ、開発者ガイド、Trailheadなど）を探してください。
-4.  **追加情報の統合:** 検索で見つけたドキュメントの内容を熟読し、元の【問題データ】と統合して、あなたの知識をアップデートしてください。
-5.  **最終判断:** アップデートされた知識を基に、改めて【問題データ】の正答が妥当であるかを再評価してください。今度は、「判断不能」ではなく、「一致」または「矛盾の可能性あり」という明確な結論とその根拠を記述してください。
+# 問題
+- question_id: {q['question_id']}
+- question_text: {q['question_text']}
+- choices: {q.get('choices')}
+- correct_answer: {q.get('correct_answer')}
+# (参考)RAGシステムの評価
+{q.get('ai_analysis', {}).get('ai_verification', {}).get('justification', 'N/A')}
 
-# 問題データ
-- **問題ID:** {q['question_id']}
-- **問題文:** {q['question_text']}
-- **選択肢:** {yaml.dump(q.get('choices', {}), allow_unicode=True)}
-- **正答:** {q.get('correct_answer', 'N/A')}
-- **(参考)非公式解説:** {q.get('japanese_explanation', 'N/A')}
-- **(参考)RAGシステムの評価:** {q.get('ai_analysis', {}).get('ai_verification', {}).get('justification', 'N/A')}
+# 候補ドキュメントリスト
+{q.get('ai_analysis', {}).get('related_docs', [])}
 
-# 出力フォーマット
-上記の思考プロセスに従って生成した最終的な分析レポートを、以下のマークダウン形式で出力してください。
+# 指示
+1.  ウェブ検索を最大限に活用し、【問題】の【正答】を直接的または間接的に裏付ける最も信頼性の高い公式ドキュメントを最大3件見つけてください。
+2.  見つけた各ドキュメントについて、以下の情報を含めてください。
+   - `title`: ドキュメントのタイトル
+   - `url`: ドキュメントのURL
+   - `reason`: なぜこのドキュメントが正答の根拠として適切なのか、具体的な理由。
+   - `supporting_text`: 正答の根拠となる、ドキュメント内の最も重要な一文または短いフレーズ。
+3.  最終的に、検索して得た全ての情報を吟味した上で、【正答】が妥当かどうかを総合的に判断し、結論を記述してください。
+    - **一致:** ドキュメントから正答が正しいと明確に判断できる場合。
+    - **矛盾の可能性あり:** ドキュメントの情報が正答と食い違う、または不十分な場合。
+    - **判断不能:** 提供されたドキュメントだけでは、正誤を全く判断できない場合。
 
-## 1. 「判断不能」の根本原因分析
-(思考プロセス 1, 2 の結果をここに記述)
-
-## 2. 不足知識を補うための推奨情報源
-(思考プロセス 3 で見つけた、最も重要だと判断した公式ドキュメントのURLを最大3つ、その有用性の説明と共にリストアップ)
-
-## 3. 追加情報を踏まえた最終評価
-(思考プロセス 4, 5 の結果をここに記述。明確な結論と、検索で見つけた情報を根拠とした詳細な理由説明)
----
+# 出力フォーマット (JSON形式のみで回答すること。前後に説明や ```json のようなマークダウンは絶対に不要)
+{{
+  "related_docs": [
+    {{
+      "title": "ドキュメント1のタイトル",
+      "url": "ドキュメント1のURL",
+      "reason": "このドキュメントが正答の根拠として適切な具体的な理由。",
+      "supporting_text": "正答の根拠となるドキュメント内の最も重要な一文。"
+    }}
+  ],
+  "ai_verification": {{
+    "status": "一致",
+    "justification": "検索して得た全ての情報を吟味した上での、総合的な判断と、その詳細な理由。"
+  }}
+}}
 """
     try:
+        # お客様の元のコードにあった、正しいツールの定義方法に戻します
         grounding_tool = types.Tool(
             google_search=types.GoogleSearch()
         )
+        
+        # JSON強制をやめ、ツール利用のみを設定します
         config = types.GenerateContentConfig(
             tools=[grounding_tool]
         )
+        
+        # お客様の元のAPI呼び出し構造を完全に維持します
         response = await client.aio.models.generate_content(
             model='gemini-2.5-pro',
             contents=prompt,
             config=config
         )
-        return response.text
-    except Exception as e:
-        return f"## 分析エラー\n\n問題ID {q['question_id']} の分析中にエラーが発生しました: {e}"
 
+        # AIの応答からJSON部分のみを賢く抽出します
+        json_match = re.search(r'\{[\s\S]*\}', response.text)
+        if json_match:
+            json_string = json_match.group(0)
+            # 後続の処理のため、IDと解析済みの辞書を返します
+            return q['question_id'], json.loads(json_string)
+        else:
+            raise ValueError("AI response does not contain a valid JSON object.")
+
+    except Exception as e:
+        # エラー発生時も、自己修復のために辞書形式でエラー情報を返します
+        error_data = {
+            'ai_verification': {
+                'status': '分析エラー', 
+                'justification': f"問題ID {q['question_id']} の分析中にエラーが発生しました: {e}"
+            },
+            'related_docs': []
+        }
+        return q['question_id'], error_data
 
 async def main():
     if not os.getenv("GOOGLE_API_KEY"):
-        print("エラー: APIキーが設定されていません。")
+        print("エラー: 環境変数 'GOOGLE_API_KEY' が.envファイルに設定されていません。")
         return
 
+    # お客様の元の`genai.Client()`の呼び出しを維持します
     client = genai.Client()
-
-    if not os.path.exists(INPUT_FILE):
-        print(f"❌ エラー: ファイル '{INPUT_FILE}' が見つかりません。")
+    
+    if not os.path.exists(YAML_FILE):
+        print(f"❌ エラー: ファイル '{YAML_FILE}' が見つかりません。")
         return
 
-    print(f"📄 '{INPUT_FILE}' を読み込んでいます...")
-    with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+    print(f"📄 '{YAML_FILE}' を読み込んでいます...")
+    with open(YAML_FILE, 'r', encoding='utf-8') as f:
         all_questions = yaml.safe_load(f)
 
+    # --- ★★★ 自己修復機能付きの更新対象抽出 ★★★ ---
     undecided_questions = [
         q for q in all_questions 
-        if q.get('ai_analysis', {}).get('ai_verification', {}).get('status') == '判断不能'
+        if q.get('ai_analysis', {}).get('ai_verification', {}).get('status') in ['判断不能', '分析エラー', 'フォーマットエラー']
     ]
     
     if not undecided_questions:
-        print("🎉 判断不能な問題は見つかりませんでした！")
+        print("🎉 更新対象となる問題は見つかりませんでした！")
         return
 
-    print(f"🔍 {len(undecided_questions)}件の「判断不能」な問題を検出しました。")
+    print(f"🔍 {len(undecided_questions)}件の更新対象の問題を検出しました。")
     
-    analyzed_ids = get_already_analyzed_ids(OUTPUT_FILE)
-    if analyzed_ids:
-        print(f"ℹ️ {len(analyzed_ids)} 件の問題が既に分析済みです。")
-
-    questions_to_analyze = [q for q in undecided_questions if q['question_id'] not in analyzed_ids]
-    
-    if not questions_to_analyze:
-        print("✅ 全ての判断不能問題が分析済みです。処理を終了します。")
-        return
-        
-    print(f"🎯 今回、{len(questions_to_analyze)}件の未分析問題を処理対象とします。")
-    
+    questions_to_analyze = undecided_questions
     if MAX_QUESTIONS_TO_ANALYZE > 0 and len(questions_to_analyze) > MAX_QUESTIONS_TO_ANALYZE:
-        questions_to_analyze = questions_to_analyze[:MAX_QUESTIONS_TO_ANALYZE]
+        questions_to_analyze = undecided_questions[:MAX_QUESTIONS_TO_ANALYZE]
         print(f"🔬 上限設定に基づき、そのうち {len(questions_to_analyze)} 件を分析します...")
 
+    # お客様の元の非同期処理の構造を維持します
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_TASKS)
     async def analyze_with_semaphore(question):
         async with semaphore:
@@ -136,24 +149,31 @@ async def main():
     tasks = [analyze_with_semaphore(q) for q in questions_to_analyze]
     analysis_results = await tqdm_asyncio.gather(*tasks, desc="Analyzing questions")
     
-    print(f"\n💾 分析レポートを '{OUTPUT_FILE}' に追記しています...")
-    with open(OUTPUT_FILE, 'a', encoding='utf-8') as f:
-        # 【変更点】レポートに書き出す際の開始番号を、既に分析済みの件数から始める
-        start_index = len(analyzed_ids)
-        
-        if f.tell() == 0:
-            f.write("# RAGシステム「判断不能」問題の深掘り分析レポート\n\n")
-            f.write("...\n\n---\n\n")
-        
-        for i, report in enumerate(analysis_results):
-            if report and isinstance(report, str):
-                # 問題番号を start_index から始める
-                report_question_number = start_index + i + 1
-                f.write(f"## 問題 {report_question_number} (ID: {questions_to_analyze[i]['question_id']}) の分析結果\n\n")
-                f.write(report)
-                f.write("\n\n---\n\n")
-            
-    print(f"✅ レポートへの追記が完了しました！ '{OUTPUT_FILE}' を確認してください。")
+    # --- ★★★ ここからが新しいファイル上書き処理です ★★★ ---
+    print(f"\n🔄 '{YAML_FILE}' を直接更新しています...")
+    
+    questions_dict = {q['question_id']: q for q in all_questions}
+    update_count = 0
+
+    for question_id, new_analysis_data in analysis_results:
+        if question_id in questions_dict and isinstance(new_analysis_data, dict):
+            # AIが返した辞書で 'ai_analysis' ブロックを更新します
+            questions_dict[question_id]['ai_analysis'] = new_analysis_data
+            update_count += 1
+        else:
+            # 万が一、解析に失敗した場合はエラーとして記録し、次回再処理の対象とします
+            error_status = {'ai_verification': {'status': 'フォーマットエラー', 'justification': 'AIからの応答が不正な形式でした。'}}
+            questions_dict[question_id]['ai_analysis'] = error_status
+            update_count += 1
+            print(f"  - ⚠️ 問題ID {question_id} の更新に失敗。エラーとして記録しました。")
+
+    if update_count > 0:
+        print(f"\n💾 {update_count}件の問題を更新しました。ファイルを保存します...")
+        with open(YAML_FILE, 'w', encoding='utf-8') as f:
+            yaml.dump(list(questions_dict.values()), f, allow_unicode=True, sort_keys=False, indent=2)
+        print("✅ ファイルの更新が完了しました！")
+    else:
+        print("\n⚠️ 更新された問題はありませんでした。")
 
 if __name__ == "__main__":
     asyncio.run(main())
