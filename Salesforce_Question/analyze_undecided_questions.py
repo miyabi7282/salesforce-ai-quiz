@@ -1,3 +1,4 @@
+
 import os
 import yaml
 from dotenv import load_dotenv
@@ -86,11 +87,10 @@ async def analyze_with_gemini(client, question_data):
 
 async def main():
     if not os.getenv("GOOGLE_API_KEY"):
-        print("エラー: 環境変数 'GOOGLE_API_KEY' が.envファイルに設定されていません。")
+        print("エラー: APIキーが設定されていません。")
         return
 
     client = genai.Client()
-    model_name_to_use = "gemini-1.5-pro-latest"
 
     if not os.path.exists(INPUT_FILE):
         print(f"❌ エラー: ファイル '{INPUT_FILE}' が見つかりません。")
@@ -131,41 +131,29 @@ async def main():
     async def analyze_with_semaphore(question):
         async with semaphore:
             await asyncio.sleep(1)
-            return await analyze_with_gemini(client, model_name_to_use, question)
+            return await analyze_with_gemini(client, question)
 
     tasks = [analyze_with_semaphore(q) for q in questions_to_analyze]
     analysis_results = await tqdm_asyncio.gather(*tasks, desc="Analyzing questions")
     
     print(f"\n💾 分析レポートを '{OUTPUT_FILE}' に追記しています...")
     with open(OUTPUT_FILE, 'a', encoding='utf-8') as f:
-        # 【最終修正】レポートに記載済みの「## 問題 X」の数を数える
-        # これにより、手動でレポートの一部を削除した場合でも、正しい通し番号が維持される
-        existing_report_content = ""
-        # ファイルが存在し、空でない場合のみ読み込む
-        if os.path.exists(OUTPUT_FILE) and os.path.getsize(OUTPUT_FILE) > 0:
-            with open(OUTPUT_FILE, 'r', encoding='utf-8') as rf:
-                existing_report_content = rf.read()
+        # 【変更点】レポートに書き出す際の開始番号を、既に分析済みの件数から始める
+        start_index = len(analyzed_ids)
         
-        # レポート内の「## 問題 X」という見出しの数を数える
-        existing_report_count = len(re.findall(r'^##\s*問題\s*\d+', existing_report_content, re.MULTILINE))
-        start_index = existing_report_count
-        
-        # ファイルが新規作成された場合（ファイルサイズが0の場合）のみヘッダーを書き込む
         if f.tell() == 0:
             f.write("# RAGシステム「判断不能」問題の深掘り分析レポート\n\n")
             f.write("...\n\n---\n\n")
         
-        # zipを使って、結果と元の質問データを正しくペアにする
-        for i, (report, question_data) in enumerate(zip(analysis_results, questions_to_analyze)):
+        for i, report in enumerate(analysis_results):
             if report and isinstance(report, str):
-                # 問題番号を通し番号にする
+                # 問題番号を start_index から始める
                 report_question_number = start_index + i + 1
-                f.write(f"## 問題 {report_question_number} (ID: {question_data['question_id']}) の分析結果\n\n")
+                f.write(f"## 問題 {report_question_number} (ID: {questions_to_analyze[i]['question_id']}) の分析結果\n\n")
                 f.write(report)
                 f.write("\n\n---\n\n")
             
     print(f"✅ レポートへの追記が完了しました！ '{OUTPUT_FILE}' を確認してください。")
 
 if __name__ == "__main__":
-    # 以前エラーが出ていたWindows用のコードは削除済み
     asyncio.run(main())
