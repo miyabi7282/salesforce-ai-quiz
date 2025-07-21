@@ -1,0 +1,9 @@
+[theme]
+base = "light"  # または "dark"
+
+[server]
+runOnSave = true
+
+[ui]
+hideTopBar = true       # 右上の≡メニューを非表示
+hideFooter = true       # 右下の "Made with Streamlit" を非表示
