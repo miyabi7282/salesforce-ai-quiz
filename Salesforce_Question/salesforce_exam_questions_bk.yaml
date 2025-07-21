@@ -1,0 +1,1912 @@
+- question_id: 1
+  question_text: Visual Insights Builder を使用して計算されたインサイトを作成するときに必要な 2 つの最小要件は何ですか?2つの回答を選択してください
+  choices:
+    A: 少なくとも1つの小節
+    B: 少なくとも1つの次元
+    C: 結合するオブジェクトが少なくとも2つ
+    D: WHERE句
+  correct_answer: A,B
+  explanation: '* Introduction to Visual Insights Builder:The Visual Insights Builder
+    in Salesforce Data Cloud is a tool used to create calculated insights, which are
+    custom metrics derived from the existing data.Reference:* Requirements for Creating
+    Calculated Insights:Measure: A measure is a quantitative value that you want to
+    analyze, such as revenue, number of purchases, or total time spent on a platform.Dimension:
+    A dimension is a qualitative attribute that you use to categorize or filter the
+    measures, such as date, region, or customer segment.* Steps to Create a Calculated
+    Insight:Navigate to the Visual Insights Builder within Salesforce Data Cloud.Select
+    "Create New Insight" and choose the dataset.Add at least one measure: This could
+    be any metric you want to analyze, such as "Total Sales." Add at least one dimension:
+    This helps to break down the measure, such as "Sales by Region."* Practical Application:Example:
+    To create an insight on "Average Purchase Value by Region," you would need:A measure:
+    Total Purchase Value.A dimension: Customer Region.This allows for actionable insights,
+    such as identifying high-performing regions.'
+- question_id: 2
+  question_text: Salesforce CRM コネクタが設定され、ケース オブジェクト データ ストリームが設定されます。その後、Salesforce
+    CRM の Case オブジェクトに Business Priority という名前の新しいカスタム項目が作成されます。ただし、新しいフィールドをデータ ストリームに追加しようとしても、そのフィールドは使用できません。この問題の原因を説明しているのはどれですか?
+  choices:
+    A: Salesforce 統合ユーザーには、新しく作成されたフィールドに対する Rad 権限がありません。
+    B: デスクトップから一括アップロードを実行するには、Salesforce Data Loader アプリケーションを使用する必要があります。
+    C: Case オブジェクトのカスタム フィールドは、Data Cloud への取り込みがサポートされていません。
+    D: 24 時間後にデータ ストリームが更新されると、Salesforce CRM に追加された新しいフィールドが自動的に含まれます。
+  correct_answer: A
+  explanation: 'The Salesforce CRM Connector uses the Salesforce Integration User
+    to access the data from the Salesforce CRM org. The Integration User must have
+    the Read permission on the fields that are included in the data stream. If the
+    Integration User does not have the Read permission on the newly created field,
+    the field will not be available for selection in the data stream configuration.
+    To resolve this issue, the administrator should assign the Read permission on
+    the new field to the Integration User profile or permission set. Reference: Create
+    a Salesforce CRM Data Stream, Edit a Data Stream, Salesforce Data Cloud Full Refresh
+    for CRM, SFMC, or Ingestion API Data Streams'
+- question_id: 3
+  question_text: データ ソースに主キーとして指定できるフィールドがない場合、コンサルタントは何をすべきでしょうか?
+  choices:
+    A: Data Cloud が推奨するデフォルトの主キーを使用します。
+    B: 数式フィールドを介して 2 つ以上のソース フィールドを組み合わせて複合キーを作成します。
+    C: フィールドを主キーとして選択し、キー修飾子を追加します。
+    D: データ ソースから重複を削除し、主キーを選択します。
+  correct_answer: B
+  explanation: '* Understanding Primary Keys in Salesforce Data Cloud:A primary key
+    is a unique identifier for records in a data source. It ensures that each record
+    can be uniquely identified and accessed.Reference:* Challenges with Missing Primary
+    Keys:Some data sources may lack a natural primary key, making it difficult to
+    uniquely identify records.* Solution: Creating a Composite Key:Composite Key Definition:
+    A composite key is created by combining two or more fields to generate a unique
+    identifier.Formula Fields: Using a formula field, different fields can be concatenated
+    to create a unique composite key.Example: If "Email" and "Phone Number" together
+    uniquely identify a record, a formula field can concatenate these values to form
+    a composite key.* Steps to Create a Composite Key:Identify fields that, when combined,
+    can uniquely identify each record.Create a formula field that concatenates these
+    fields.Use this composite key as the primary key for the data source in Data Cloud.'
+- question_id: 4
+  question_text: Northern Trail Outfitters (NTO) のデータ クラウド管理者は、何らかの理由でデータ ストリームのいずれかが失敗した場合に、Slack
+    と電子メールでプロアクティブかつ即座に通知されることを望んでいます。このような状況が発生した場合、NTO の既存のサポートおよびトリアージ プロセスの一環としてケースもトリガーされ、グローバル監視ダッシュボードに反映される必要があります。これらの要件に対してコンサルタントは何を推奨すべきでしょうか?
+  choices:
+    A: データアクション
+    B: データクラウドクエリエディタ
+    C: Salesforce フロー
+    D: Salesforce レポートとダッシュボード
+  correct_answer: C
+  explanation: 'To meet the requirement of being proactively and immediately informed
+    via Slack and email if any data streams fail, and to trigger a case as part of
+    the support process, the best solution is to use Salesforce Flows . Here''s why
+    and how this works:Understanding the Requirements :The admin wants to be notified
+    immediately via Slack and email when a data stream fails.A case should also be
+    created automatically to reflect the issue in the global monitoring dashboard.This
+    requires an automated process that integrates with both internal systems (e.g.,
+    Slack, email) and external workflows (e.g., case creation).Why Salesforce Flows?Salesforce
+    Flows are highly flexible and can automate complex business processes. They can
+    monitor system events (e.g., data stream failures) and trigger actions like sending
+    notifications or creating records.Flows can integrate seamlessly with Slack and
+    email using platform events and action elements.They can also create cases programmatically
+    and update dashboards for real-time monitoring.Steps to Implement This Solution
+    :Step 1: Navigate to Setup > Process Automation > Flows and create a new flow.Step
+    2: Configure a Platform Event Trigger or Record-Triggered Flow to listen for data
+    stream failure events.Step 3: Add an action element to send a notification to
+    Slack using the Slack Integration feature.Step 4: Add another action element to
+    send an email alert using the Send Email action.Step 5: Add a step to create a
+    Case record with details about the failure. Use predefined fields to populate
+    relevant information (e.g., error message, timestamp).Step 6: Update the global
+    monitoring dashboard to reflect the newly created case. This can be done by linking
+    the case to a report or dashboard component.Why Not Other Options?A . Data actions:
+    While data actions can perform specific tasks on data, they are not designed for
+    cross-system automation like sending Slack notifications or creating cases.B .
+    Data Cloud Query Editor: The Query Editor is used for querying and analyzing data
+    but does not provide automation capabilities for notifications or case creation.D
+    . Salesforce reports and dashboards: Reports and dashboards are for visualizing
+    data, not for triggering actions or automating workflows.By using Salesforce Flows,
+    NTO can achieve a fully automated and integrated solution that meets all the stated
+    requirements.'
+- question_id: 5
+  question_text: コンサルタントがデータクラウドの実装を準備しています。顧客データに関してコンサルタントはどのような倫理に従うべきでしょうか?
+  choices:
+    A: 監査の目的で、会社の上級管理職が顧客データにアクセスできるようにします。
+    B: すべてのデータを収集して使用し、よりパーソナライズされたエクスペリエンスを作成します。
+    C: 削除を容易にするために、機密データを同じ DMO にマップします。
+    D: 年齢、性別、民族などの機密データを要求する場合は慎重に検討してください。
+  correct_answer: D
+  explanation: 'When implementing Data Cloud, the consultant should adhere to ethical
+    practices regarding customer data, particularly by carefully considering the collection
+    and use of sensitive data such as age, gender, or ethnicity . Here''s why:Understanding
+    Ethical ConsiderationsCollecting and using customer data comes with significant
+    ethical responsibilities, especially when dealing with sensitive information.The
+    consultant must ensure compliance with privacy regulations (e.g., GDPR, CCPA)
+    and uphold ethical standards to protect customer trust.Why Carefully Consider
+    Sensitive Data?Privacy and Trust :Collecting sensitive data (e.g., age, gender,
+    ethnicity) can raise privacy concerns and erode customer trust if not handled
+    appropriately.Customers are increasingly aware of their data rights and expect
+    transparency and accountability.Regulatory Compliance :Regulations like GDPR and
+    CCPA impose strict requirements on the collection, storage, and use of sensitive
+    data.Careful consideration ensures compliance and avoids potential legal issues.Other
+    Options Are Less Suitable :A . Allow senior leaders in the firm to access customer
+    data for audit purposes : While audits are important, unrestricted access to sensitive
+    data is unethical and violates privacy principles.B . Collect and use all of the
+    data to create more personalized experiences : Collecting all data without regard
+    for sensitivity is unethical and risks violating privacy regulations.C . Map sensitive
+    data to the same DMO for ease of deletion : While mapping data for deletion is
+    a good practice, it does not address the ethical considerations of collecting
+    sensitive data in the first place.Steps to Ensure Ethical PracticesStep 1: Evaluate
+    NecessityAssess whether sensitive data is truly necessary for achieving business
+    objectives.Step 2: Obtain Explicit ConsentIf sensitive data is required, obtain
+    explicit consent from customers and provide clear explanations of how the data
+    will be used.Step 3: Minimize Data CollectionLimit the collection of sensitive
+    data to only what is essential and anonymize or pseudonymize data where possible.Step
+    4: Implement Security MeasuresUse encryption, access controls, and other security
+    measures to protect sensitive data.ConclusionThe consultant should carefully consider
+    asking for sensitive data such as age, gender, or ethnicity to uphold ethical
+    standards, maintain customer trust, and ensure regulatory compliance.'
+- question_id: 6
+  question_text: 高級品小売業者は、電子メール通信のために Marketing Cloud を通じて有効化した、価値の高い顧客をターゲットとしたセグメントを作成しました。同社は、アクティブ化された数がセグメント数よりも小さいことに気づきました。その理由は何でしょうか?
+  choices:
+    A: Marketing Cloud アクティベーションではフリークエンシー キャップが適用され、アクティベーションで送信できるレコードの数が制限されます。
+    B: Data Cloud は、Marketing Cloud のアクティベーションに対してコンタクト ポイントの存在を強制します。個人が関連する連絡先を持っていない場合、連絡先は有効になりません。
+    C: Marketing Cloud のアクティベーションは、エンゲージメントを持たず、過去 6 か月間メールを開いたりクリックしたりしていない個人を自動的に抑制します。
+    D: Marketing Cloud のアクティベーションでは、Marketing Cloud にすでに存在する個人のみがアクティベートされます。新しいレコードのアクティベーションは許可されません。
+  correct_answer: B
+  explanation: 'Data Cloud requires a Contact Point for Marketing Cloud activations,
+    which is a record that links an individual to an email address. This ensures that
+    the individual has given consent to receive email communications and that the
+    email address is valid. If the individual does not have a related Contact Point,
+    they will not be activated in Marketing Cloud. This may result in a lower activated
+    count than the segment count. Reference: Data Cloud Activation, Contact Point
+    for Marketing Cloud'
+- question_id: 7
+  question_text: 小売業者は、顧客の一意の ID とは異なるロイヤルティ ID を使用してプロファイルを統合したいと考えています。コンサルタントは、ロイヤルティ
+    ID に対して完全一致ルールを実行するために ID 解決でどのオブジェクトを使用する必要がありますか?
+  choices:
+    A: パーティ識別オブジェクト
+    B: ロイヤリティ識別オブジェクト
+    C: 個々のオブジェクト
+    D: 連絡先識別オブジェクト
+  correct_answer: A
+  explanation: The Party Identification object is the correct object to use in identity
+    resolution to perform exact match rules on the Loyalty ID. The Party Identification
+    object is a child object of the Individual object that stores different types
+    of identifiers for an individual, such as email, phone, loyalty ID, social media
+    handle, etc. Each identifier has a type, a value, and a source. The consultant
+    can use the Party Identification object to create a match rule that compares the
+    Loyalty ID type and value across different sources and links the corresponding
+    individuals.The other options are not correct objects to use in identity resolution
+    to perform exact match rules on the Loyalty ID. The Loyalty Identification object
+    does not exist in Data Cloud. The Individual object is the parent object that
+    represents a unified profile of an individual, but it does not store the Loyalty
+    ID directly. The Contact Identification object is a child object of the Contact
+    object that stores identifiers for a contact, such as email, phone, etc., but
+    it does not store the Loyalty ID.Reference:Data Modeling Requirements for Identity
+    ResolutionIdentity Resolution in a Data SpaceConfigure Identity Resolution RulesetsMap
+    Required ObjectsData and Identity in Data Cloud
+- question_id: 8
+  question_text: 顧客は、過去 30 日間に注文を行った顧客の大規模なセグメントを作成し、... から関連する属性をアクティベーションに追加します。Marketing
+    Cloud でアクティベーションを確認すると、30 日以上前の注文が含まれていることに気付きました。この問題を解決するためにコンサルタントは何をすべきでしょうか?
+  choices:
+    A: 30 日間のデータのみを含むデータ グラフを使用します。
+    B: データ スペース フィッターを適用して、30 日以上経過した注文を除外します。
+    C: 購入注文日にフィルターを適用して、30 日以上経過した注文を除外します。
+    D: Marketing Cloud Engagement で SQL を使用して、30 日以上経過した注文を削除します。
+  correct_answer: C
+  explanation: 'The issue arises because the activated segment in Marketing Cloud
+    contains orders older than 30 days, despite the segment being defined to include
+    only recent orders. The best solution is to apply a filter to the Purchase Order
+    Date to exclude older orders. Here''s why:Understanding the IssueThe segment includes
+    related attributes from the purchase order data.Despite filtering for orders placed
+    in the last 30 days, older orders are appearing in the activation.Why Apply a
+    Filter to Purchase Order Date?Root Cause :The related attributes (e.g., purchase
+    order details) may not be filtered by the same criteria as the segment.Without
+    a specific filter on the Purchase Order Date , older orders may inadvertently
+    be included.Solution Approach :Applying a filter directly to the Purchase Order
+    Date ensures that only orders within the desired timeframe are included in the
+    activation.Other Options Are Less Suitable :A . Use data graphs that contain only
+    30 days of data : Data graphs are not typically used to filter data for activations.B
+    . Apply a data space filter to exclude orders older than 30 days : Data space
+    filters apply globally and may unintentionally affect other use cases.D . Use
+    SQL in Marketing Cloud Engagement to remove orders older than 30 days : This is
+    a reactive approach and does not address the root cause in Data Cloud.Steps to
+    Resolve the IssueStep 1: Review the Segment DefinitionConfirm that the segment
+    filters for orders placed in the last 30 days.Step 2: Add a Filter to Purchase
+    Order DateModify the activation configuration to include a filter on the Purchase
+    Order Date , ensuring only orders within the last 30 days are included.Step 3:
+    Test the ActivationPublish the segment again and verify that the activation in
+    Marketing Cloud contains only the desired orders.ConclusionBy applying a filter
+    to the Purchase Order Date , the consultant ensures that only orders placed in
+    the last 30 days are included in the activation, resolving the issue effectively.'
+- question_id: 9
+  question_text: 顧客は、アカウント統合全体の統合率が低いことに気付きました。アカ​​ウントを個人および連絡先の電子メール DMO にマッピングしました。統合率を高めるにはどうすればいいでしょうか?
+  choices:
+    A: 調整ルールを「最も頻繁に発生する」に変更します。
+    B: 個々の ID ルールセットを無効にします。
+    C: 一致するルールの数を増やします。
+    D: データソース内のアカウントアドレスの詳細を更新する
+  correct_answer: C
+  explanation: '* Consolidation Rate: The consolidation rate in Salesforce Data Cloud
+    refers to the effectiveness of unifying records into a single profile. A low consolidation
+    rate indicates that many records are not being successfully unified.* Matching
+    Rules: Matching rules are critical in the identity resolution process. They define
+    the criteria for identifying and merging duplicate records.* Solution:Increase
+    Matching Rules: Adding more matching rules improves the system''s ability to identify
+    duplicate records. This includes matching on additional fields or using more sophisticated
+    matching algorithms.Steps:Access the Identity Resolution settings in Data Cloud.Review
+    the current matching rules.Add new rules that consider more fields such as phone
+    number, address, or other unique identifiers.* Benefits:Improved Unification:
+    Higher accuracy in matching and merging records, leading to a higher consolidation
+    rate.Comprehensive Profiles: Enhanced customer profiles with consolidated data
+    from multiple sources.* Reference:Salesforce Data Cloud Identity ResolutionSalesforce
+    Help: Matching Rules'
+- question_id: 10
+  question_text: 顧客は、放棄された閲覧動作のジャーニーをトリガーするための要件の概要を説明しました。要件に基づいて、コンサルタントは、ストリーミング分析情報を使用して、Journey
+    Builder に対するデータ アクションを 1 時間ごとにトリガーすることを決定します。データアクションが必要な頻度で確実にトリガーされるように、コンサルタントはソリューションをどのように構成すればよいでしょうか?
+  choices:
+    A: ジャーニー エントリ スケジュールを 1 時間ごとに実行するように設定します。
+    B: 時間ごとのバッチで取り込まれるデータを構成します。
+    C: アクティブ化スケジュールを時間ごとに設定します。
+    D: インサイトの集計時間枠を 1 時間に設定します。
+  correct_answer: A
+  explanation: ''
+- question_id: 11
+  question_text: 正常に設定された Amazon S3 データ ストリームが「ファイルが見つかりません」というエラー メッセージが表示されて更新に失敗した場合、コンサルタントは次の
+    2 つの手順を実行する必要がありますか?2 つの答えを選択してください
+  choices:
+    A: データ クラウド ユーザーに正しい権限が設定されているかどうかを確認します。
+    B: Amazon S3 データ ソースがデータ クラウド セットアップで有効になっているかどうかを確認します。
+    C: 指定されたバケットの場所にファイルが存在するかどうかを確認します。
+    D: S3 ユーザーに正しい権限が設定されているかどうかを確認します。
+  correct_answer: A,C
+  explanation: 'A "NO FILE FOUND" error message indicates that Data Cloud cannot access
+    or locate the file from the Amazon S3 source. There are two possible reasons for
+    this error and two corresponding steps that a consultant should take to troubleshoot
+    it:The Data Cloud user does not have the correct permissions to read the file
+    from the Amazon S3 bucket. This could happen if the user''s permission set or
+    profile does not include the Data Cloud Data Stream Read permission, or if the
+    user''s Amazon S3 credentials are invalid or expired. To fix this issue, the consultant
+    should check and update the user''s permissions and credentials in Data Cloud
+    and Amazon S3, respectively.The file does not exist in the specified bucket location.
+    This could happen if the file name or path has changed, or if the file has been
+    deleted or moved from the Amazon S3 bucket. To fix this issue, the consultant
+    should check and verify the file name and path in the Amazon S3 bucket, and update
+    the data stream configuration in Data Cloud accordingly. Reference: Create Amazon
+    S3 Data Stream in Data Cloud, How to Use the Amazon S3 Storage Connector in Data
+    Cloud, Amazon S3 Connection'
+- question_id: 12
+  question_text: Cumulus Financial は、Data Cloud ユーザー向けに、地域に基づいて販売 CRM データを分離しています。複数のデータ
+    スペース (デフォルトのスペースと、EMEA および APAC 地域向けにカスタマイズされた 2 つの追加スペース) が構成されています。両地域のデータを視覚化するために一時的なアクセスが必要な
+    EME A の営業担当者は、APAC のデータを視覚化できないと言います。APAC の営業担当者は、対応するセグメント化されたデータを視覚化できます。この問題の原因を説明している記述はどれですか?
+  choices:
+    A: EMEA の営業担当者は、APAC データ スペースに関連付けられたプロファイルに割り当てられていません。
+    B: APAC データ スペースはどの権限セットにも関連付けられていません。
+    C: APAC データ スペースはどのプロファイルにも関連付けられていません。
+    D: EMEA の営業担当者には、APAC データ スペースに関連付けられた権限セットが割り当てられていません。
+  correct_answer: D
+  explanation: 'The issue arises because the EMEA sales reps cannot visualize APAC
+    data, while APAC sales reps can access their segmented data. The root cause is
+    that the EMEA sales reps lack the necessary permissions to access the APAC data
+    space. Here''s why:Understanding the IssueCumulus Financial uses data spaces to
+    segregate CRM data by region (default, EMEA, APAC).EMEA sales reps need temporary
+    access to APAC data but are unable to view it.APAC sales reps can access their
+    corresponding segmented data without issues.Why Permission Sets?Data Space Access
+    Control :Data spaces in Salesforce Data Cloud are secured using profiles and permission
+    sets .Users must be explicitly granted access to a data space via their assigned
+    profiles or permission sets.Root Cause Analysis :Since APAC sales reps can access
+    their data, the APAC data space is properly configured.The issue lies with the
+    EMEA sales reps, who likely do not have the required permission set granting access
+    to the APAC data space.Temporary Access :Temporary access can be granted by assigning
+    the appropriate permission set to the EMEA sales reps.Steps to Resolve the IssueStep
+    1: Identify the Required Permission SetNavigate to Setup > Permission Sets and
+    locate the permission set associated with the APAC data space.Step 2: Assign the
+    Permission SetAssign the APAC data space permission set to the EMEA sales reps
+    requiring temporary access.Step 3: Verify AccessConfirm that the EMEA sales reps
+    can now visualize APAC data.Step 4: Revoke Temporary AccessOnce the temporary
+    access period ends, remove the permission set from the EMEA sales reps.Why Not
+    Other Options?A . The EMEA sales reps have not been assigned to the profile associated
+    with the APAC data space :Profiles are typically broader and less flexible than
+    permission sets for managing temporary access.B . The APAC data space is not associated
+    with any permission set :This is incorrect because APAC sales reps can access
+    their data, indicating the data space is properly configured.C . The APAC data
+    space is not associated with any profile :Similar to Option B, this is incorrect
+    because APAC sales reps can access their data.ConclusionThe issue is resolved
+    by ensuring that the EMEA sales reps are assigned the permission set associated
+    with the APAC data space . This grants them temporary access to visualize APAC
+    data.'
+- question_id: 13
+  question_text: データ ストリームを取り込むときに数式を作成する理由は何ですか?
+  choices:
+    A: ファイルを連結して正しい順序で取り込まれるようにする
+    B: 既存のルールセットに一意の外部識別子を追加する
+    C: 日付時刻フィールドをデータマッピングで使用するためにデールフィールドに変換します
+    D: データストリームから重複したデータ行を削除する
+  correct_answer: C
+  explanation: 'Creating a formula during data stream ingestion is often done to manipulate
+    or transform data fields to meet specific requirements. In this case, the most
+    common reason is to transform a date-time field into a date field for use in data
+    mapping . Here''s why:Understanding the RequirementWhen ingesting data into Salesforce
+    Data Cloud, certain fields may need to be transformed to align with the target
+    data model.For example, a date-time field (e.g., "2023-10-05T14:30:00Z") may need
+    to be converted into a date field (e.g., "2023-10-05") for proper mapping and
+    analysis.Why Transform a Date-Time Field into a Date Field?Data Mapping Compatibility
+    :Some data models or downstream systems may only accept date fields (without the
+    time component).Transforming the field ensures compatibility and avoids errors
+    during ingestion or activation.Simplified Analysis :Removing the time component
+    simplifies analysis and reporting, especially when working with daily trends or
+    aggregations.Standardization :Converting date-time fields into consistent date
+    formats ensures uniformity across datasets.Steps to Implement This SolutionStep
+    1: Identify the Date-Time FieldDuring the data stream setup, identify the field
+    that contains the date-time value (e.g., "Order_Date_Time").Step 2: Create a Formula
+    FieldUse the Formula Field option in the data stream configuration to create a
+    new field.Apply a transformation function (e.g., DATE() or equivalent) to extract
+    the date portion from the date-time field.Step 3: Map the Transformed FieldMap
+    the newly created date field to the corresponding field in the target data model
+    (e.g., Unified Profile or Data Lake Object).Step 4: Validate the TransformationTest
+    the data stream to ensure the transformation works correctly and the date field
+    is properly ingested.Why Not Other Options?A . To concatenate files so they are
+    ingested in the correct sequence :Concatenation is not a typical use case for
+    formulas during ingestion. File sequencing is usually handled at the file ingestion
+    level, not through formulas.B . To add a unique external identifier to an existing
+    ruleset :Adding a unique identifier is typically done during data preparation
+    or identity resolution, not through formulas during ingestion.D . To remove duplicate
+    rows of data from the data stream :Removing duplicates is better handled through
+    deduplication rules or transformations, not formulas.ConclusionThe primary reason
+    to create a formula when ingesting a data stream is to transform a date-time field
+    into a date field for use in data mapping . This ensures compatibility, simplifies
+    analysis, and standardizes the data for downstream use.'
+- question_id: 14
+  question_text: ノーザン トレイル アウトフィッターズは、Marketing Cloud スターター データ バンドルを使用して、Marketing
+    Cloud データを Data Cloud に取り込みます。Marketing Cloud スターター データ バンドルで利用可能な 2 つのデータセットは何ですか?2
+    つの答えを選択してください
+  choices:
+    A: パーソナライゼーション
+    B: モバイルコネクト
+    C: ロイヤリティ管理
+    D: モバイルプッシュ
+  correct_answer: B,D
+  explanation: 'The Marketing Cloud Starter Data Bundles are predefined data bundles
+    that allow you to easily ingest data from Marketing Cloud into Data Cloud1. The
+    available datasets in Marketing Cloud Starter Data Bundles are Email, MobileConnect,
+    and MobilePush2. These datasets contain engagement events and metrics from different
+    Marketing Cloud channels, such as email, SMS, and push notifications2. By using
+    these datasets, you can enrich your Data Cloud data model with Marketing Cloud
+    data and create segments and activations based on your marketing campaigns and
+    journeys1. The other options are incorrect because they are not available datasets
+    in Marketing Cloud Starter Data Bundles. Option A is incorrect because Personalization
+    is not a dataset, but a feature of Marketing Cloud that allows you to tailor your
+    content and messages to your audience3. Option C is incorrect because Loyalty
+    Management is not a dataset, but a product of Marketing Cloud that allows you
+    to create and manage loyalty programs for your customers4. Reference: Marketing
+    Cloud Starter Data Bundles in Data Cloud, Connect Your Data Sources, Personalization
+    in Marketing Cloud, Loyalty Management in Marketing Cloud'
+- question_id: 15
+  question_text: コンサルタントは、以前に黒のパンツを購入した顧客向けに新製品の発売を発表するセグメントを構築しています。この基準を満たすために、コンサルタントは
+    Order Product オブジェクトから製品の色と製品タイプの属性をどのように配置する必要がありますか?
+  choices:
+    A: 製品の色の属性を 1 つのコンテナに配置し、製品タイプの属性を別のコンテナに配置します。
+    B: 動的に適用する「黒」の計算された分析情報の属性を配置します。
+    C: 製品および製品タイプの属性を直接属性として配置します。
+    D: 製品の色と製品タイプの属性を 1 つのコンテナに配置します。
+  correct_answer: D
+  explanation: 'To create a segment based on the product color and product type from
+    the Order Product object, the consultant should place the attributes for product
+    color and product type in a single container. This way, the segment will include
+    only the customers who have purchased black pants, and not those who have purchased
+    black shirts or blue pants. A container is a grouping of attributes that defines
+    a segment of individuals based on a logical AND operation. Placing the attributes
+    in separate containers would result in a segment that includes customers who have
+    purchased any black product or any pants product, which is not the desired criteria.
+    Placing an attribute for the "black" calculated insight would not work, because
+    calculated insights are based on aggregated data and not individual-level data.
+    Placing the attributes as direct attributes would not work, because direct attributes
+    are used to filter individuals based on their profile data, not their order data.
+    Reference:Create a Segment in Data CloudLearn About Segmentation ToolsSalesforce
+    Launches: Data Cloud Consultant Certification'
+- question_id: 16
+  question_text: Cloud Kicks のアナリストは、過去 1 週間の 1 日あたりの平均売上を判断するために、迅速な分析情報を取得する必要があります。コンサルタントは何を推奨すべきでしょうか?
+  choices:
+    A: セールスフォースフロー
+    B: クエリ API を利用した Lightning Web コンポーネント
+    C: Salesforce レポート
+    D: Azure へのセグメントのアクティブ化
+  correct_answer: C
+  explanation: 'To help the analyst from Cloud Kicks determine the average sales per
+    day during the past week, Salesforce Reports is the most efficient and straightforward
+    solution. Here''s a detailed breakdown:Understanding Salesforce Reports :Salesforce
+    Reports is a native tool within the Salesforce platform that allows users to create,
+    customize, and analyze data in various formats. It is particularly well-suited
+    for quick insights and ad-hoc analysis without requiring complex development or
+    integrations.Why Not Other Options?Option A (Salesforce Flows) : While Salesforce
+    Flows is a powerful automation tool, it is not designed for analytical purposes.
+    Creating a flow to calculate average sales per day would require additional configuration
+    and logic, making it unnecessarily complex for this use case.Option B (Lightning
+    Web Component Utilizing Query API) : Using a Lightning Web Component with the
+    Query API involves custom development. While this approach is flexible, it is
+    overkill for a simple analytical task like calculating average sales.Option D
+    (Segment Activation to Azure) : Segment activation refers to exporting segmented
+    customer data to external platforms like Azure. This process is unrelated to generating
+    quick insights and would introduce unnecessary complexity for this requirement.How
+    Salesforce Reports Can Be Used :Step 1: Create a Report : Navigate to the Salesforce
+    Reports tab and create a new report based on the relevant object (e.g., Opportunities
+    or Orders).Step 2: Filter by Date Range : Apply a filter to include only records
+    from the past week. For example, set the "Close Date" field to "Last Week." Step
+    3: Add Summary Fields : Use summary formulas or grouping to calculate total sales
+    for each day. Then, compute the average sales per day by dividing the total sales
+    by the number of days in the range.Step 4: Run the Report : Execute the report
+    to view the results instantly.Salesforce Documentation Reference :Salesforce''s
+    official documentation highlights that Reports are the go-to tool for analyzing
+    and summarizing data quickly. They are designed to provide actionable insights
+    without requiring advanced technical skills, making them ideal for tasks like
+    calculating average sales.By leveraging Salesforce Reports, the analyst can efficiently
+    obtain the required insights without additional development or integration efforts.'
+- question_id: 17
+  question_text: 顧客は生涯価値について計算された洞察を持っています。計算された洞察を得るには、コンサルタントは何に注意する必要がありますか。変更が必要ですか?
+  choices:
+    A: 新しいディメンションを追加できます。
+    B: 既存のディメンションを削除できます。
+    C: 既存の対策を削除できます。
+    D: 新しいメジャーを追加できます。
+  correct_answer: B
+  explanation: 'A calculated insight is a multidimensional metric that is defined
+    and calculated from data using SQL expressions. A calculated insight can include
+    dimensions and measures. Dimensions are the fields that are used to group or filter
+    the data, such as customer ID, product category, or region. Measures are the fields
+    that are used to perform calculations or aggregations, such as revenue, quantity,
+    or average order value. A calculated insight can be modified by editing the SQL
+    expression or changing the data space. However, the consultant needs to be aware
+    of the following limitations and considerations when modifying a calculated insight12:Existing
+    dimensions cannot be removed. If a dimension is removed from the SQL expression,
+    the calculated insight will fail to run and display an error message. This is
+    because the dimension is used to create the primary key for the calculated insight
+    object, and removing it will cause a conflict with the existing data. Therefore,
+    the correct answer is B.New dimensions can be added. If a dimension is added to
+    the SQL expression, the calculated insight will run and create a new field for
+    the dimension in the calculated insight object. However, the consultant should
+    be careful not to add too many dimensions, as this can affect the performance
+    and usability of the calculated insight.Existing measures can be removed. If a
+    measure is removed from the SQL expression, the calculated insight will run and
+    delete the field for the measure from the calculated insight object. However,
+    the consultant should be aware that removing a measure can affect the existing
+    segments or activations that use the calculated insight.New measures can be added.
+    If a measure is added to the SQL expression, the calculated insight will run and
+    create a new field for the measure in the calculated insight object. However,
+    the consultant should be careful not to add too many measures, as this can affect
+    the performance and usability of the calculated insight. Reference: Calculated
+    Insights, Calculated Insights in a Data Space.'
+- question_id: 18
+  question_text: Cumulus Financial は、サービス エージェントが連絡先レコード上の Unified Individual に関連付けられたすべてのケースの表示を閲覧できるようにしたいと考えています。このユースケースでコンサルタントが考慮すべき
+    2 つの機能はどれですか?2 つの答えを選択してください
+  choices:
+    A: データアクション
+    B: プロファイル API
+    C: Lightning Web コンポーネント
+    D: APL のクエリ
+  correct_answer: B,C
+  explanation: 'A Unified Individual is a profile that combines data from multiple
+    sources using identity resolution rules in Data Cloud. A Unified Individual can
+    have multiple contact points, such as email, phone, or address, that link to different
+    systems and records. A consultant can use the following features to display all
+    cases associated with a Unified Individual on a contact record:Profile API: This
+    is a REST API that allows you to retrieve and update Unified Individual profiles
+    and related attributes in Data Cloud. You can use the Profile API to query the
+    cases that are related to a Unified Individual by using the contact point ID or
+    the unified ID as a filter. You can also use the Profile API to update the Unified
+    Individual profile with new or modified case information from other systems.Lightning
+    Web Components: These are custom HTML elements that you can use to create reusable
+    UI components for your Salesforce apps. You can use Lightning Web Components to
+    create a custom component that displays the cases related to a Unified Individual
+    on a contact record. You can use the Profile API to fetch the data from Data Cloud
+    and display it in a table, list, or chart format. You can also use Lightning Web
+    Components to enable actions, such as creating, editing, or deleting cases, from
+    the contact record.The other two options are not relevant for this use case. A
+    Data Action is a type of action that executes a flow, a data action target, or
+    a data action script when an insight is triggered. A Data Action is used for activation
+    and personalization, not for displaying data on a contact record. A Query APL
+    is a query language that allows you to access and manipulate data in Data Cloud.
+    A Query APL is used for data exploration and analysis, not for displaying data
+    on a contact record. Reference: Profile API Developer Guide, Lightning Web Components
+    Developer Guide, Create Unified Individual Profiles Unit'
+- question_id: 19
+  question_text: Data Cloud はどのようにしてデータのプライバシーとセキュリティを確保しますか?
+  choices:
+    A: 保存時および転送中のデータを暗号化することで
+    B: 同意の参照を強制および制御することにより
+    C: オフサイトサーバーにデータを安全に保存することで
+    D: データアクセスを許可された管理者に制限することで
+  correct_answer: A
+  explanation: '* Data Privacy and Security in Data Cloud:Ensuring data privacy and
+    security is paramount in Salesforce Data Cloud.Reference:* Key Security Measures:Encrypting
+    Data at Rest and in Transit:Data encryption ensures that information is protected
+    from unauthorized access both when stored and when transmitted.Enforcing and Controlling
+    Consent Preferences:Consent management ensures that data usage complies with customer
+    permissions and regulatory requirements.* Steps to Implement Security Measures:Data
+    Encryption:Enable encryption for data at rest using Salesforce Shield.Ensure TLS/SSL
+    encryption is used for data in transit.Consent Management:Set up and enforce consent
+    preferences within Data Cloud.Regularly audit and update consent records.* Practical
+    Application:Example: A financial institution uses encryption to secure customer
+    financial data and manages consent to comply with GDPR.'
+- question_id: 20
+  question_text: Cumulus Financial は現在、Data Cloud を使用しており、S3 コネクタ経由でバックエンド システムから
+    upsert モードでトランザクション データを取り込んでいます。 6 か月前の初期セットアップ中に、同社はカスタム分類を作成するために Data Cloud
+    に数式フィールドを作成しました。より多くの分類を考慮して、この式を更新する必要があります。S3 コネクタを使用する場合、コンサルタントは数式フィールドの更新に関して何に留意する必要がありますか?
+  choices:
+    A: Data Cloud は、更新/挿入タイプのデータ ストリームの数式フィールドの更新をサポートしていません。
+    B: Data Cloud は $3 からデータの完全更新を開始し、すべてのレコードの数式を更新します。
+    C: Data Cloud は、新しいレコードの今後のベースでのみ数式を更新します。
+    D: Data Cloud は、次回の増分更新/更新時にすべてのレコードの式を更新します。
+  correct_answer: B
+  explanation: ''
+- question_id: 21
+  question_text: データクラウドにおける人工知能 (AI) の役割は何ですか?
+  choices:
+    A: データ検証の自動化
+    B: 動的なデータ駆動型管理ダッシュボードの作成
+    C: 洞察と予測を通じて顧客とのやり取りを強化
+    D: ユースケース用のメールテンプレートの生成
+  correct_answer: C
+  explanation: '* Role of AI in Data Cloud: Artificial intelligence (AI) plays a crucial
+    role in Salesforce Data Cloud by leveraging data to generate insights and predictions
+    that enhance customer interactions.* Insights and Predictions:AI Algorithms: Use
+    machine learning algorithms to analyze vast amounts of customer data.Predictive
+    Analytics: Provide predictive insights, such as customer behavior trends, preferences,
+    and potential future actions.* Enhancing Customer Interactions:Personalization:
+    AI helps in creating personalized experiences by predicting customer needs and
+    preferences.Efficiency: Enables proactive customer service by predicting issues
+    and suggesting solutions before customers reach out.Marketing: Improves targeting
+    and segmentation, ensuring that marketing efforts are directed towards the most
+    promising leads and customers.* Use Cases:Recommendation Engines: Suggest products
+    or services based on past behavior and preferences.Churn Prediction: Identify
+    customers at risk of leaving and engage them with retention strategies.* Reference:Salesforce
+    Data Cloud AI CapabilitiesSalesforce AI for Customer Interaction'
+- question_id: 22
+  question_text: Data Cloud コンサルタントが、アカウント DMO と連絡先ポイント アドレス DMO 間の新しい 1 対 1 の関係を保存しようとしましたが、エラーが発生します。このエラーを修正するにはコンサルタントは何をすべきでしょうか?
+  choices:
+    A: 連絡先アドレス DMO に追加フィールドをマップします。
+    B: アカウント レコードの合計数が ID 解決に十分な数であることを確認します。
+    C: アカウントごとに複数の連絡先に対応するために、カーディナリティを多対 1 に変更します。
+    D: アカウントを連絡先の電子メールと連絡先の電話にもマップします。
+  correct_answer: C
+  explanation: '* Relationship Cardinality: In Salesforce Data Cloud, defining the
+    correct relationship cardinality between data model objects (DMOs) is crucial
+    for accurate data representation and integration.* 1-to-1 Relationship Error:
+    The error occurs because the relationship between Account DMO and Contact Point
+    Address DMO is set as 1-to-1, which implies that each account can only have one
+    contact point address.* Solution:Change Cardinality: Modify the relationship cardinality
+    to many-to-one. This allows multiple contact point addresses to be associated
+    with a single account, reflecting real-world scenarios more accurately.Steps:Go
+    to the data model configuration in Data Cloud.Locate the relationship between
+    Account DMO and Contact Point Address DMO.Change the relationship type from 1-to-1
+    to many-to-one.* Benefits:Accurate Representation: Accommodates real-world data
+    scenarios where an account may have multiple contact points.Error Resolution:
+    Resolves the error and ensures smooth data integration.* Reference:Salesforce
+    Data Cloud Documentation: RelationshipsSalesforce Help: Data Modeling in Data
+    Cloud'
+- question_id: 23
+  question_text: Data Cloud を使用する金融会社は、ユーザーが顧客が関与するさまざまなチャネルをすべて簡単に表示できるようにしたいと考えています。この要件を満たすためにコンサルタントはどの機能を推奨する必要がありますか?
+  choices:
+    A: Data Cloud を使用して Tableau などの分析ツールに接続します。
+    B: 計算された洞察を使用して、さまざまな顧客といつどのように関わるかを決定します。
+    C: 取り込んだデータとインサイトに基づいてセグメントを作成し、Marketing Cloud でアクティブ化します。
+    D: Data Cloud を使用して、利用可能なさまざまなデータ ソースからデータを取り込みます。
+  correct_answer: A
+  explanation: 'To simplify how users can view all the various channels a customer
+    engages with, the best solution is to use Data Cloud to connect with analytic
+    tools like Tableau . Here''s why and how this works:Understanding the RequirementThe
+    finance company wants its users to have a consolidated view of all customer engagement
+    channels (e.g., email, social media, website interactions, etc.). This requires:Aggregating
+    data from multiple sources into a unified platform.Providing an intuitive and
+    visual way to analyze and interpret the data.Why Use Data Cloud with Analytic
+    Tools like Tableau?Data Cloud as a Centralized Data Hub :Salesforce Data Cloud
+    aggregates data from multiple sources (e.g., CRM, Marketing Cloud, external systems)
+    into a unified platform. This ensures that all customer engagement data is available
+    in one place.Tableau for Advanced Visualization :Tableau is a powerful analytics
+    and visualization tool that integrates seamlessly with Salesforce Data Cloud.It
+    allows users to create interactive dashboards and reports that provide a comprehensive
+    view of customer engagement across all channels.Users can drill down into specific
+    channels, analyze trends, and gain actionable insights without needing advanced
+    technical skills.Simplified User Experience :By leveraging Tableau''s intuitive
+    interface, users can easily explore and understand customer engagement patterns
+    without requiring deep knowledge of the underlying data structure.Steps to Implement
+    This SolutionStep 1: Ingest Data into Data CloudEnsure that all relevant customer
+    engagement data (e.g., website visits, email interactions, social media activity)
+    is ingested into Data Cloud from various sources.Use Data Streams to bring in
+    data from CRM, Marketing Cloud, and other external systems.Step 2: Connect Data
+    Cloud to TableauNavigate to Setup > Analytics > Tableau CRM in Salesforce.Configure
+    the integration between Data Cloud and Tableau to enable seamless data flow.Step
+    3: Create Dashboards in TableauUse Tableau to build dashboards that consolidate
+    customer engagement data from all channels.Include visualizations such as bar
+    charts, heatmaps, and trend lines to highlight key insights (e.g., most active
+    channels, engagement frequency, etc.).Step 4: Share Dashboards with UsersPublish
+    the dashboards to Tableau Server or Tableau Online.Provide access to the relevant
+    users within the finance company so they can view and interact with the dashboards.Why
+    Not Other Options?B: Use calculated insights to determine when and how to engage
+    with various customers :While calculated insights are useful for understanding
+    customer behavior, they do not provide a consolidated view of all engagement channels.
+    This option focuses more on decision-making rather than visualization.C: Create
+    segments based on the ingested data and insights to activate in Marketing Cloud
+    :Segmentation is valuable for targeting specific groups of customers, but it does
+    not address the requirement to view all engagement channels in one place. Segments
+    are more about grouping customers rather than providing a holistic view.D: Use
+    Data Cloud to ingest data from various available data sources :While ingesting
+    data is a critical first step, it does not solve the problem of simplifying how
+    users view engagement channels. The focus here is on data ingestion, not visualization
+    or analysis.ConclusionBy connecting Data Cloud with Tableau , the finance company
+    can provide its users with a simplified and visually intuitive way to view all
+    customer engagement channels. This approach lever'
+- question_id: 24
+  question_text: セグメンテーションおよび計算された洞察における時間ベースの操作にデータを使用するには、どのデータ ストリーム カテゴリを割り当てる必要がありますか?
+  choices:
+    A: 個人
+    B: トランザクション
+    C: 販売注文
+    D: エンゲージメント
+  correct_answer: B
+  explanation: 'Data streams are the sources of data that are ingested into Data Cloud
+    and mapped to the data model. Data streams have different categories that determine
+    how the data is processed and used in Data Cloud. Transaction data streams are
+    used for time-based operations in segmentation and calculated insights, such as
+    filtering by date range, aggregating by time period, or calculating time-to-event
+    metrics. Transaction data streams are typically used for event data, such as purchases,
+    clicks, or visits, that have a timestamp and a value associated with them. Reference:
+    Data Streams, Data Stream Categories'
+- question_id: 25
+  question_text: Cumulus Financial (CF) は、忠実で熱心な顧客をターゲットにしたいと考えています。プラチナ ティアの顧客が 24
+    時間以内に投資ページを 3 回以上訪問すると、CF はプライベート コンサルテーションを提供する電子メールをすぐに送信したいと考えています。このビジネス要件に対してコンサルタントは何を推奨すべきでしょうか?
+  choices:
+    A: Marketing Cloud Engagement トランザクション メールへのデータ アクションによる計算されたインサイト
+    B: Marketing Cloud Engagement でのデータアクションジャーニーへの迅速なセグメント化
+    C: Marketing Cloud Engagement へのアクティベーションを含む標準セグメント
+    D: データアクションによるインサイトのストリーミングを Marketing Cloud Engagement のジャーニーに組み込む
+  correct_answer: D
+  explanation: 'To meet the requirement of targeting loyal and engaged customers (platinum-tier
+    customers visiting investment pages more than three times in 24 hours) and sending
+    an immediate email offering a private consultation, the best solution is to use
+    a streaming insight with a data action into a journey in Marketing Cloud Engagement
+    . Here''s why:Understanding the RequirementThe company wants to identify platinum-tier
+    customers who visit their Investment pages more than three times within a 24-hour
+    period.Once identified, these customers should immediately receive an email offering
+    a private consultation.This requires real-time monitoring of customer behavior
+    and triggering an automated response.Why Streaming Insight with a Data Action?Streaming
+    Insights for Real-Time Monitoring :A streaming insight in Salesforce Data Cloud
+    monitors customer interactions in real time.It can detect when a platinum-tier
+    customer visits the Investment pages more than three times within 24 hours.Data
+    Actions for Immediate Response :A data action allows you to trigger specific actions
+    based on the insights generated.In this case, the data action would send the customer''s
+    information to a journey in Marketing Cloud Engagement to initiate the email campaign.Journey
+    in Marketing Cloud Engagement :Marketing Cloud Engagement journeys are designed
+    to automate personalized marketing activities, such as sending transactional emails.By
+    integrating the streaming insight with a journey, the system can immediately send
+    the email offering a private consultation.Steps to Implement This SolutionStep
+    1: Create a Streaming InsightNavigate to Data Cloud > Insights > Streaming Insights
+    .Define the criteria for identifying platinum-tier customers who visit the Investment
+    pages more than three times in 24 hours.Step 2: Configure a Data ActionSet up
+    a data action that sends the identified customer''s information to Marketing Cloud
+    Engagement.Ensure the data action includes relevant details (e.g., customer ID,
+    email address).Step 3: Build a Journey in Marketing Cloud EngagementIn Marketing
+    Cloud Engagement, create a journey that listens for incoming data from the data
+    action.Configure the journey to send a personalized email offering a private consultation.Step
+    4: Test and DeployTest the entire workflow to ensure that the streaming insight
+    triggers the data action and that the email is sent immediately.Why Not Other
+    Options?A . Calculated insight with a data action to a Marketing Cloud Engagement
+    transactional email :Calculated insights are not designed for real-time monitoring.
+    They are better suited for batch processing or periodic calculations, making them
+    unsuitable for this use case.B . Rapid segment to a data action journey in Marketing
+    Cloud Engagement :While rapid segments are useful for quickly grouping customers,
+    they do not provide the real-time detection required for this scenario.C . Standard
+    segment with activation into Marketing Cloud Engagement :Standard segments are
+    static or periodically updated and cannot respond to real-time customer behavior.ConclusionBy
+    using a streaming insight with a data action into a journey in Marketing Cloud
+    Engagement , Cumulus Financial can achieve real-time monitoring and immediate
+    engagement with its loyal customers.'
+- question_id: 26
+  question_text: データ クラウド コンサルタントは、新しいサービスベースのデータ ソースのデータ ストリームをセットアップ中です。ケースデータを取り込む場合、どのフィールドをイベント時間フィールドに関連付けることが推奨されますか?
+  choices:
+    A: 最終更新日
+    B: 解決日
+    C: エスカレーション日
+    D: 作成日
+  correct_answer: A
+  explanation: 'The Event Time field is a special field type that captures the timestamp
+    of an event in a data stream. It is used to track the chronological order of events
+    and to enable time-based segmentation and activation. When ingesting Case data,
+    the recommended field to be associated with the Event Time field is the Last Modified
+    Date field. This field reflects the most recent update to the case and can be
+    used to measure the case duration, resolution time, and customer satisfaction.
+    The other fields, such as Resolution Date, Escalation Date, or Creation Date,
+    are not as suitable for the Event Time field, as they may not capture the latest
+    status of the case or may not be applicable for all cases. Reference: Data Stream
+    Field Types, Salesforce Data Cloud Exam Questions'
+- question_id: 27
+  question_text: 顧客には、特定のセグメントのアクティベーションが失敗するたびに通知を受け取るという要件があります。このユースケースを解決するには、コンサルタントはどの機能を使用する必要がありますか?
+  choices:
+    A: フロー
+    B: レポート
+    C: アクティベーションアラート
+    D: ダッシュボード
+  correct_answer: C
+  explanation: 'The feature that the consultant should use to solution for this use
+    case is C. Activation alert. Activation alerts are notifications that are sent
+    to users when an activation fails or succeeds for a segment. Activation alerts
+    can be configured in the Activation Settings page, where the consultant can specify
+    the recipients, the frequency, and the conditions for sending the alerts. Activation
+    alerts can help the customer to monitor the status of their activations and troubleshoot
+    any issues that may arise. Reference: Salesforce Data Cloud Consultant Exam Guide,
+    Activation Alerts'
+- question_id: 28
+  question_text: ライドシェア会社は、目的地、移動距離などの 5 つの「楽しい」旅行統計を含む年間レビューを提供する電子メールを顧客に送信したいと考えています。この生データは
+    Data Cloud に届き、ソースで集計されません。同社は、過去 365 日間に少なくとも 1 回乗車した顧客のセグメントを作成します。ベストプラクティスに従って、電子メールの内容をパーソナライズするためにコンサルタントは
+    Data Cloud でどのソリューションを推奨すべきですか?
+  choices:
+    A: データ変換を使用して統計を集計し、それを個人の直接属性にマッピングしてアクティベーションに含めます。
+    B: アクティベーション用の計算されたインサイトを 5 つ作成し、ディメンション フィルターを追加します。
+    C: データアクションを使用して各乗車をイベントとして Marketing Cloud Engagement に送信し、AMP スクリプトを使用してこのデータをメールで要約します。
+    D: 過去 365 日間のアクティベーションに関連属性を含めます。
+  correct_answer: A
+  explanation: 'To personalize the content of the email with five "fun" trip statistics,
+    the consultant should recommend using a data transform to aggregate the statistics
+    and map them to direct attributes on the Individual object for inclusion in the
+    activation. Here''s why:Understanding the RequirementThe rideshare company wants
+    to send personalized emails to customers with aggregated trip statistics (e.g.,
+    destination, distance traveled).The raw data is not aggregated at the source,
+    so it must be processed in Data Cloud.Why Use a Data Transform?Aggregating Statistics
+    :A data transform can aggregate the raw trip data (e.g., summing distances, counting
+    destinations) into meaningful statistics for each customer.This ensures that the
+    data is summarized and ready for personalization.Mapping to Direct Attributes
+    :The aggregated statistics can be mapped to direct attributes on the Individual
+    object.These attributes can then be included in the activation and used to personalize
+    the email content.Other Options Are Less Suitable :B . Create five calculated
+    insights for the activation and add dimension filters : While calculated insights
+    are useful, creating five separate insights is inefficient compared to a single
+    data transform.C . Use a data action to send each ride as an event to Marketing
+    Cloud Engagement, then use AMP script to summarize this data in the email : This
+    approach is overly complex and shifts the aggregation burden to Marketing Cloud,
+    which is not ideal.D . Include related attributes in the activation for the last
+    365 days : Including raw data without aggregation would result in unprocessed
+    information, making personalization difficult.Steps to Implement the SolutionStep
+    1: Create a Data TransformUse a batch or streaming data transform to aggregate
+    the trip statistics (e.g., total distance, unique destinations) for each customer.Step
+    2: Map Aggregated Data to Individual ObjectMap the aggregated statistics to direct
+    attributes on the Individual object in Data Cloud.Step 3: Activate the DataInclude
+    the aggregated attributes in the activation for the email campaign.Step 4: Personalize
+    the EmailUse the activated attributes to personalize the email content with the
+    trip statistics.ConclusionUsing a data transform to aggregate the statistics and
+    map them to direct attributes on the Individual object is the most efficient and
+    effective solution for personalizing the email content.'
+- question_id: 29
+  question_text: 顧客は、データ ウェアハウスのトランザクション データを Data Cloud で使用したいと考えています。SFTP サイト経由でのみデータをエクスポートできます。ファイルをデータクラウドにどのように取り込む必要がありますか?
+  choices:
+    A: SFTP コネクタを使用してファイルを取り込みます。
+    B: Cloud Storage コネクタ経由でファイルを取り込みます。
+    C: データ インポート ウィザードを使用してファイルを手動でインポートします。
+    D: Salesforce のデータローダー アプリケーションを使用して、デスクトップから一括アップロードを実行します。
+  correct_answer: A
+  explanation: 'The SFTP Connector is a data source connector that allows Data Cloud
+    to ingest data from an SFTP server. The customer can use the SFTP Connector to
+    create a data stream from their exported file and bring it into Data Cloud as
+    a data lake object. The other options are not the best ways to bring the file
+    into Data Cloud because:B . The Cloud Storage Connector is a data source connector
+    that allows Data Cloud to ingest data from cloud storage services such as Amazon
+    S3, Azure Storage, or Google Cloud Storage. The customer does not have their data
+    in any of these services, but only on an SFTP site.C . The Data Import Wizard
+    is a tool that allows users to import data for many standard Salesforce objects,
+    such as accounts, contacts, leads, solutions, and campaign members. It is not
+    designed to import data from an SFTP site or for custom objects in Data Cloud.D
+    . The Dataloader is an application that allows users to insert, update, delete,
+    or export Salesforce records. It is not designed to ingest data from an SFTP site
+    or into Data Cloud. Reference: SFTP Connector - Salesforce, Create Data Streams
+    with the SFTP Connector in Data Cloud - Salesforce, Data Import Wizard - Salesforce,
+    Salesforce Data Loader'
+- question_id: 30
+  question_text: データ ソースを切断しようとすると、それに関連付けられた 2 つの依存関係がある場合にエラーが生成されますか?2つの回答を選択してください
+  choices:
+    A: アクティベーション
+    B: データストリーム
+    C: セグメント
+    D: アクティベーションターゲット
+  correct_answer: B,C
+  explanation: When disconnecting a data source in Salesforce Data Cloud, the system
+    checks for active dependencies that rely on the data source. Based on Salesforce's
+    official documentation (Disconnect a Data Source), the error occurs if the data
+    source has data streams or segments associated with it. Here's the breakdown:Key
+    Dependencies That Block DisconnectionData Stream (Option B):Why It Matters:A data
+    stream is the pipeline that ingests data from the source into Data Cloud. If an
+    active data stream is connected to the data source, disconnecting the source will
+    fail because the stream depends on it for ongoing data ingestion.Resolution:Delete
+    or pause the data stream first.Documentation Reference:"Before disconnecting a
+    data source, delete all data streams that are associated with it." (Salesforce
+    Help Article) Segment (Option C):Why It Matters:Segments built using data from
+    the source will reference that data source. Disconnecting the source would orphan
+    these segments, so the system blocks the action.Resolution:Delete or modify segments
+    that depend on the data source.Documentation Reference:"If there are segments
+    that use data from the data source, you must delete those segments before disconnecting
+    the data source." (Salesforce Help Article) Why Other Options Are Incorrect Activation
+    (A):Activations send segments to external systems (e.g., Marketing Cloud) but
+    do not directly depend on the data source itself. The dependency chain is Segment
+    → Activation, not Data Source → Activation.Activation Target (D):Activation targets
+    (e.g., Marketing Cloud) are destinations and do not tie directly to the data source.Steps
+    to Disconnect a Data SourceDelete Dependent Segments:Navigate to Data Cloud >
+    Segments and remove any segments built using the data source.Delete or Pause Data
+    Streams:Go to Data Cloud > Data Streams and delete streams linked to the data
+    source.Disconnect the Data Source:Once dependencies are resolved, disconnect the
+    source via Data Cloud > Data Sources.
+- question_id: 31
+  question_text: コンサルタントは、複数のブランド チームが管理するすべてのセグメントが、毎月更新される同じ除外基準セットに準拠していることを確認したいと考えています。この機能を可能にする最も効率的なオプションは何ですか?
+  choices:
+    A: データ キットを作成、公開、デプロイします。
+    B: 共通の基準を使用して再利用可能なコンテナ ブロックを作成します。
+    C: ネストされたセグメントを作成します。
+    D: セグメントを作成し、ブランドごとにコピーします。
+  correct_answer: B
+  explanation: The most efficient option to allow for this capability is to create
+    a reusable container block with common criteria. A container block is a segment
+    component that can be reused across multiple segments. A container block can contain
+    any combination of filters, nested segments, and exclusion criteria. A consultant
+    can create a container block with the exclusion criteria that apply to all the
+    segments managed by multiple brand teams, and then add the container block to
+    each segment. This way, the consultant can update the exclusion criteria in one
+    place and have them reflected in all the segments that use the container block.The
+    other options are not the most efficient options to allow for this capability.
+    Creating, publishing, and deploying a data kit is a way to share data and segments
+    across different data spaces, but it does not allow for updating the exclusion
+    criteria on a monthly basis. Creating a nested segment is a way to combine segments
+    using logical operators, but it does not allow for excluding individuals based
+    on specific criteria. Creating a segment and copying it for each brand is a way
+    to create multiple segments with the same exclusion criteria, but it does not
+    allow for updating the exclusion criteria in one place.Reference:Create a Container
+    BlockCreate a Segment in Data CloudCreate and Publish a Data KitCreate a Nested
+    Segment
+- question_id: 32
+  question_text: ユーザーが Data Cloud で統合された顧客データを視覚化および分析できるようにするツールはどれですか?
+  choices:
+    A: Salesforce CLI
+    B: Heroku
+    C: Tableau
+    D: Einstein Analytics
+  correct_answer: C
+  explanation: '* Salesforce Data Cloud Overview: Salesforce Data Cloud enables organizations
+    to unify and manage customer data from multiple sources, providing a comprehensive
+    view of customer interactions and behaviors.* Visualization and Analysis: For
+    visualizing and analyzing this unified data, Salesforce provides multiple tools,
+    each serving different purposes. Tableau is particularly noted for its advanced
+    analytics and visualization capabilities.* Tableau Integration: Tableau is integrated
+    with Salesforce, allowing users to create detailed and interactive visualizations.
+    It can connect directly to Salesforce Data Cloud, pulling in unified data for
+    comprehensive analysis.* Capabilities: Tableau supports a wide range of data sources
+    and formats, offering drag-and-drop features to create complex charts and dashboards.
+    This makes it an ideal tool for analyzing the rich datasets managed within Salesforce
+    Data Cloud.* Reference:Salesforce Help: Tableau IntegrationSalesforce Data Cloud
+    Overview'
+- question_id: 33
+  question_text: ある企業は顧客データを Marketing Cloud に保存し、Marketing Cloud Connector を使用してデータを
+    Data Cloud に取り込みます。データ削除または忘れられる権利の要求はどこに提出されますか?
+  choices:
+    A: データクラウド設定
+    B: データクラウドの個々のデータプロファイルについて
+    C: マーケティングクラウドの設定
+    D: Consent API 経由
+  correct_answer: C
+  explanation: '* Data Deletion Requests: For companies using Salesforce Marketing
+    Cloud and Data Cloud, managing data privacy and deletion requests is essential.*
+    Marketing Cloud Connector: This connector facilitates data integration between
+    Marketing Cloud and Data Cloud, but data deletion requests must follow specific
+    procedures.* Deletion Requests in Marketing Cloud:Data Management: Requests for
+    data deletion or the right to be forgotten are submitted through Marketing Cloud
+    settings, where the customer data is originally stored and managed.Propagation:
+    Once the request is processed in Marketing Cloud, the changes are propagated to
+    Data Cloud through the connector.* Reference:Salesforce Marketing Cloud Documentation:
+    Data ManagementSalesforce Data Cloud Connector Guide'
+- question_id: 34
+  question_text: コンサルタントはエンゲージメントベースの関連属性を使用して最近のアクティベーションをレビューしていますが、セグメント メンバーの大部分のペイロードに関連属性が表示されません。この問題のトラブルシューティングを行うためにコンサルタントが確認すべき
+    2 つの領域はどれですか?2 つの答えを選択してください
+  choices:
+    A: 関連するエンゲージメント イベントは過去 90 日以内に発生しました。
+    B: アクティベーションは、エンゲージメント データではなくプロファイル データに基づいてセグメント化されたセグメントを参照しています。
+    C: 関連する属性に対して正しいパスが選択されています。
+    D: アクティブ化されたプロファイルには統合連絡先があります。
+  correct_answer: A,C
+  explanation: 'Engagement-based related attributes are attributes that describe the
+    interactions of a person with an email message, such as opens, clicks, unsubscribes,
+    etc. These attributes are stored in the Engagement data model object (DMO) and
+    can be added to an activation to send more personalized communications. However,
+    there are some considerations and limitations when using engagement-based related
+    attributes, such as:For engagement data, activation supports a 90-day lookback
+    window. This means that only the attributes from the engagement events that occurred
+    within the last 90 days are considered for activation. Any records outside of
+    this window are not included in the activation payload. Therefore, the consultant
+    should review the event time of the related engagement events and make sure they
+    are within the lookback window.The correct path to the related attributes must
+    be selected for the activation. A path is a sequence of DMOs that are connected
+    by relationships in the data model. For example, the path from Individual to Engagement
+    is Individual -> Email -> Engagement. The path determines which related attributes
+    are available for activation and how they are filtered. Therefore, the consultant
+    should review the path selection and make sure it matches the desired related
+    attributes and filters.The other two options are not relevant for this issue.
+    The activations can reference segments that segment on profile data rather than
+    engagement data, as long as the activation target supports related attributes.
+    The activated profiles do not need to have a Unified Contact Point, which is a
+    unique identifier for a person across different data sources, to activate engagement-based
+    related attributes. Reference: Add Related Attributes to an Activation, Related
+    Attributes in Data Cloud activation have no values, Explore the Engagement Data
+    Model Object'
+- question_id: 35
+  question_text: Northern Trail Outfitters (NTO) は、それぞれ独自の顧客、取引、ロイヤルティ情報を持つ 6 つの独自のブランドを所有および運営しています。マーケティング
+    ディレクターは、NTO Outlet ブランドのセグメントとアクティベーションが他のブランドの顧客や取引を参照しないようにしたいと考えています。この要件を処理するための最も効率的なアプローチは何ですか?
+  choices:
+    A: Business Unit Aware アクティベーションを使用します。
+    B: アウトレット ブランドをデータ スペースに分離します。
+    C: ブランドを 6 つの異なるデータ スペースに分けます。
+    D: バッチ データ変換を作成して、Outlet ブランドの DLO を生成します。
+  correct_answer: B
+  explanation: 'To ensure segments and activations for the NTO Outlet brand do not
+    reference data from other brands, the most efficient approach is to isolate the
+    Outlet brand''s data using Data Spaces. Here''s the analysis:Data Spaces (Option
+    B):Definition: Data Spaces in Salesforce Data Cloud partition data into isolated
+    environments, ensuring that segments, activations, and analytics only reference
+    data within the same space.Why It Works: By creating a dedicated Data Space for
+    the Outlet brand, all customer, transaction, and loyalty data for Outlet will
+    be siloed. Segments and activations built in this space cannot access data from
+    other brands, even if they exist in the same Data Cloud instance.Efficiency: This
+    avoids complex filtering logic or manual data management. It aligns with Salesforce''s
+    best practice of using Data Spaces for multi-brand or multi-entity organizations
+    (Source: Salesforce Data Cloud Implementation Guide, "Data Partitioning with Data
+    Spaces").Why Other Options Are Incorrect:Business Unit Aware Activation (A):Business
+    Unit (BU) settings in Salesforce CRM control record visibility but are not natively
+    tied to Data Cloud segmentation.BU-aware activation ensures activations respect
+    sharing rules but does not prevent segments from referencing data across BUs in
+    Data Cloud.Six Different Data Spaces (C):While creating a Data Space for each
+    brand (6 total) would technically isolate all data, the requirement specifically
+    focuses on the Outlet brand. Creating six spaces is unnecessary overhead and not
+    the "most efficient" solution.Batch Data Transform to Generate DLO (D):Creating
+    a Data Lake Object (DLO) via batch transforms would require ongoing manual effort
+    to filter Outlet-specific data and does not inherently prevent cross-brand references
+    in segments.Steps to Implement:Step 1: Navigate to Data Cloud Setup > Data Spaces
+    and create a new Data Space for the Outlet brand.Step 2: Ingest Outlet-specific
+    data (customers, transactions, loyalty) into this Data Space.Step 3: Build segments
+    and activations within the Outlet Data Space. The system will automatically restrict
+    access to other brands'' data.Conclusion: Separating the Outlet brand into its
+    own Data Space (Option B) is the most efficient way to enforce data isolation
+    and meet the requirement. This approach leverages native Data Cloud functionality
+    without overcomplicating the setup.'
+- question_id: 36
+  question_text: 複数のデータ ソースを持ち、個人に関するデータを単一の統合プロファイルに照合および調整する必要がある顧客に対して、調査中にコンサルタントはどの機能を強調すべきでしょうか?
+  choices:
+    A: データ クレンジング
+    B: 調和
+    C: データ統合
+    D: ID 解決
+  correct_answer: D
+  explanation: 'Identity resolution is the feature that allows Data Cloud to match
+    and reconcile data about individuals from multiple data sources into a single
+    unified profile. Identity resolution uses rulesets to define how source profiles
+    are matched and consolidated based on common attributes, such as name, email,
+    phone, or party identifier. Identity resolution enables Data Cloud to create a
+    360-degree view of each customer across different data sources and systems12.
+    The other options are not the best features to highlight for this customer need
+    because:A . Data cleansing is the process of detecting and correcting errors or
+    inconsistencies in data, such as duplicates, missing values, or invalid formats.
+    Data cleansing can improve the quality and accuracy of data, but it does not match
+    or reconcile data across different data sources3.B . Harmonization is the process
+    of standardizing and transforming data from different sources into a common format
+    and structure. Harmonization can enable data integration and interoperability,
+    but it does not match or reconcile data across different data sources4.C . Data
+    consolidation is the process of combining data from different sources into a single
+    data set or system. Data consolidation can reduce data redundancy and complexity,
+    but it does not match or reconcile data across different data sources5. Reference:
+    1: Data and Identity in Data Cloud | Salesforce Trailhead, 2: Data Cloud Identiy
+    Resolution | Salesforce AI Research, 3: [Data Cleansing - Salesforce], 4: [Harmonization
+    - Salesforce], 5: [Data Consolidation - Salesforce]'
+- question_id: 37
+  question_text: Cloud Kicks は顧客から忘れてほしいというリクエストを受け取りました。この要求に応えるために、コンサルタントはどの 2
+    つの方法で Data Cloud を使用する必要がありますか?2つの回答を選択してください
+  choices:
+    A: 受信データ ストリームからデータを削除し、完全な更新を実行します。
+    B: ヘッダーなしのファイルに個人 ID を追加し、ファイルからの削除機能を使用します。
+    C: データ エクスプローラーを使用して個人を特定し、手動で削除します。
+    D: Consent APIを使用して処理を抑制し、個人および関連レコードを
+  correct_answer: B,D
+  explanation: source data streams.Explanation:To honor a Request to be Forgotten
+    by a customer, a consultant should use Data Cloud in two ways:Add the Individual
+    ID to a headerless file and use the delete from file functionality. This option
+    allows the consultant to delete multiple Individuals from Data Cloud by uploading
+    a CSV file with their IDs1. The deletion process is asynchronous and can take
+    up to 24 hours to complete1.Use the Consent API to suppress processing and delete
+    the Individual and related records from source data streams. This option allows
+    the consultant to submit a Data Deletion request for an Individual profile in
+    Data Cloud using the Consent API2. A Data Deletion request deletes the specified
+    Individual entity and any entities where a relationship has been defined between
+    that entity's identifying attribute and the Individual ID attribute2. The deletion
+    process is reprocessed at 30, 60, and 90 days to ensure a full deletion2. The
+    other options are not correct because:Deleting the data from the incoming data
+    stream and performing a full refresh will not delete the existing data in Data
+    Cloud, only the new data from the source system3.Using Data Explorer to locate
+    and manually remove the Individual will not delete the related records from the
+    source data streams, only the Individual entity in Data Cloud. Reference:Delete
+    Individuals from Data CloudRequesting Data Deletion or Right to Be ForgottenData
+    Refresh for Data Cloud[Data Explorer]
+- question_id: 38
+  question_text: 顧客にとってのデータクラウドの主な価値は何ですか?
+  choices:
+    A: 顧客とその関連データの統合ビューを提供するため
+    B: すべてのシステムをゴールデン レコードで接続するには
+    C: すべての匿名データに対する単一の信頼できる情報源を作成するには
+    D: 顧客の行動を聞き、理解し、それに基づいて行動することで、パーソナライズされたキャンペーンを作成するため
+  correct_answer: A
+  explanation: 'Data Cloud is a platform that enables you to activate all your customer
+    data across Salesforce applications and other systems. Data Cloud allows you to
+    create a unified profile of each customer by ingesting, transforming, and linking
+    data from various sources, such as CRM, marketing, commerce, service, and external
+    data providers. Data Cloud also provides insights and analytics on customer behavior,
+    preferences, and needs, as well as tools to segment, target, and personalize customer
+    interactions. Data Cloud''s primary value to customers is to provide a unified
+    view of a customer and their related data, which can help you deliver better customer
+    experiences, increase loyalty, and drive growth. Reference: Salesforce Data Cloud,
+    When Data Creates Competitive Advantage'
+- question_id: 39
+  question_text: Northern Trail Outfitters (NTO) は、メール キャンペーンの特定のセグメントに該当する連絡先のリストを
+    Data Cloud コンサルタントに依頼します。コンサルタントはこのリストを NTO にどのように提供すればよいでしょうか?
+  choices:
+    A: セグメントを作成し、そのセグメントを NTO の Salesforce CRM に対してアクティブ化します。
+    B: セグメントを作成し、アクティベーション ターゲットとして電子メールを選択し、NTO に近いセグメントをアクティベートします。
+    C: セグメントを作成し、「ダウンロード」をクリックして、NTO に提供するセグメント メンバーシップの詳細を取得します。
+    D: 新しいファイル ストレージ アクティベーション ターゲットを作成し、セグメントを作成してから、新しいアクティベーション ターゲットに対してセグメントをアクティベートします。
+  correct_answer: B
+  explanation: ''
+- question_id: 40
+  question_text: 顧客には、Data Cloud 組織内で各セグメントが最後に公開された時間を表示できるようにするという要件があります。この要件に最もよく対処するためにコンサルタントが推奨する
+    2 つの機能はどれですか?2 つの答えを選択してください
+  choices:
+    A: プロファイル エクスプローラー
+    B: 計算された洞察
+    C: ダッシュボード
+    D: レポート
+  correct_answer: C,D
+  explanation: 'A customer who wants to view the last time each segment was published
+    within their Data Cloud org can use the dashboard and report features to achieve
+    this requirement. A dashboard is a visual representation of data that can show
+    key metrics, trends, and comparisons. A report is a tabular or matrix view of
+    data that can show details, summaries, and calculations. Both dashboard and report
+    features allow the user to create, customize, and share data views based on their
+    needs and preferences. To view the last time each segment was published, the user
+    can create a dashboard or a report that shows the segment name, the publish date,
+    and the publish status fields from the segment object. The user can also filter,
+    sort, group, or chart the data by these fields to get more insights and analysis.
+    The user can also schedule, refresh, or export the dashboard or report data as
+    needed. Reference: Dashboards, Reports'
+- question_id: 41
+  question_text: コンサルタントは、DMO でレコードが更新されるとすぐに CRM のフィールドを更新する必要があります。コンサルタントはどの機能を使用すべきでしょうか?
+  choices:
+    A: データ共有ターゲット
+    B: データアクション
+    C: 高速セグメント
+    D: ストリーミングデータ変換
+  correct_answer: B
+  explanation: 'When a record in the Data Model Object (DMO) is updated, Data Actions
+    can be used to immediately trigger updates in an external system like Salesforce
+    CRM.Data Actions allow for real-time or near-real-time updates to external systems.When
+    a record in the DMO is updated, a Data Action can push updates to CRM fields.This
+    ensures that CRM always reflects the latest Data Cloud updates without manual
+    intervention.Why Not A?Data Share Targets are used for sharing data externally
+    (e.g., Snowflake) but do not update CRM fields directly.Why Not C?Rapid Segments
+    are used for fast audience segmentation, not for updating CRM fields.Why Not D?Streaming
+    Data Transforms are used for real-time data processing, but they do not update
+    CRM fields directly.Salesforce Data Cloud Reference:Salesforce Help Documentation
+    - Data Actions OverviewTrailhead Module: Automating Data Updates with Data ActionsSalesforce
+    Knowledge Base - Best Practices for Keeping CRM and Data Cloud in Sync'
+- question_id: 42
+  question_text: コンサルタントは、統合された個人プロファイルに最新の電子メール アドレスが保存されていないことに気付きました。この問題を解決するためにコンサルタントはどのようなアクションを取る必要がありますか?
+  choices:
+    A: Salesforce CRM から古いメール アドレスを削除します。
+    B: DLO オブジェクトのマッピングが連絡先の電子メールに正しいかどうかを確認します。
+    C: 調整ルールが正しく使用されていることを確認します。
+    D: 必要に応じて、ソース システムの電子メール アドレスを確認して更新します。
+  correct_answer: C
+  explanation: '* Understanding Unified Individual Profile:The unified individual
+    profile combines data from multiple sources to create a comprehensive view of
+    each customer.Reference:* Issue with Latest Email Address:If the latest email
+    address is not being stored, the reconciliation rules, which determine how data
+    from different sources is combined and updated, may be incorrectly configured.*
+    Reconciliation Rules:These rules define which data source has priority and how
+    conflicts are resolved when combining data.Ensuring that these rules are correctly
+    configured is essential for maintaining accurate and up-to-date profiles.* Steps
+    to Troubleshoot:Navigate to the reconciliation rules settings in Salesforce Data
+    Cloud.Review the current rules to ensure the correct handling of email addresses.Verify
+    that the rules prioritize the most recent data and handle duplicates appropriately.'
+- question_id: 43
+  question_text: Data Cloud は個人の忘れられる権利をどのように処理しますか?
+  choices:
+    A: すべてのデータ ソース オブジェクトからレコードを削除し、ダウンストリーム データ モデル オブジェクトは次にスケジュールされた取り込み時に更新されます。
+    B: 指定された個別レコードとその統合個別リンク レコードを削除します。
+    C: 指定された個人とレコードを、個人データ モデル オブジェクトにマップされたデータ ソース オブジェクトから削除します。
+    D: 指定された個人と、その個人に関連するデータ モデル オブジェクト/データ レイク オブジェクトからレコードを削除します。
+  correct_answer: D
+  explanation: Data Cloud handles an individual's Right to be Forgotten by deleting
+    the specified Individual and records from any data model object/data lake object
+    related to the Individual. This means that Data Cloud removes all the data associated
+    with the individual from the data space, including the data from the source objects,
+    the unified individual profile, and any related objects. Data Cloud also deletes
+    the Unified Individual Link record that links the individual to the source records.
+    Data Cloud uses the Consent API to process the Right to be Forgotten requests,
+    which are reprocessed at 30, 60, and 90 days to ensure a full deletion.The other
+    options are not correct descriptions of how Data Cloud handles an individual's
+    Right to be Forgotten. Data Cloud does not delete the records from all data source
+    objects, as this would affect the data integrity and availability of the source
+    systems. Data Cloud also does not delete only the specified Individual record
+    and its Unified Individual Link record, as this would leave the source records
+    and the related records intact. Data Cloud also does not delete only the specified
+    Individual and records from any data source object mapped to the Individual data
+    model object, as this would leave the related records intact.Reference:Requesting
+    Data Deletion or Right to Be ForgottenData Deletion for Data CloudUse the Consent
+    API with Data CloudData and Identity in Data Cloud
+- question_id: 44
+  question_text: 顧客がエージェントと連携しているときに、顧客サポートのやり取りを改善するために Data Cloud が提供する機能はどれですか?
+  choices:
+    A: 予測的なトラブルシューティング
+    B: 強化されたレポートツール
+    C: リアルタイムデータ統合
+    D: 自動カスタマーサービス返信
+  correct_answer: C
+  explanation: '* Customer Support in Salesforce Data Cloud: One of the key benefits
+    of Salesforce Data Cloud is its ability to enhance customer support by providing
+    comprehensive and real-time customer data.* Real-Time Data Integration: This functionality
+    allows customer support agents to access the most up-to-date customer information,
+    improving their ability to respond to customer inquiries and issues effectively.*
+    Benefits for Customer Support:Immediate Access: Agents have real-time access to
+    customer interactions and data, ensuring they can provide accurate and timely
+    support.Contextual Information: The integrated data provides a holistic view of
+    the customer''s history and preferences, allowing for more personalized support
+    interactions.* Use Case: When a customer contacts support, the agent can see real-time
+    updates on recent purchases, interactions, and any ongoing issues, enabling them
+    to resolve queries quickly and efficiently.* Reference:Salesforce Data Cloud for
+    Customer SupportReal-Time Data Integration in Salesforce'
+- question_id: 45
+  question_text: コンサルタントは、Cloud File Storage ターゲットの命名規則に一致するように属性名を変更するにはどうすればよいでしょうか?
+  choices:
+    A: 数式フィールドを使用して、アクティベーションのフィールド名を更新します。
+    B: データ ストリーム構成内の属性名を更新します。
+    C: アクティベーションを構成するときに優先される属性名を設定します。
+    D: データ モデル オブジェクトのフィールド名を更新します。
+  correct_answer: C
+  explanation: 'A Cloud File Storage target is a type of data action target in Data
+    Cloud that allows sending data to a cloud storage service such as Amazon S3 or
+    Google Cloud Storage. When configuring an activation to a Cloud File Storage target,
+    a consultant can modify the attribute names to match a naming convention by setting
+    preferred attribute names in Data Cloud. Preferred attribute names are aliases
+    that can be used to control the field names in the target file. They can be set
+    for each attribute in the activation configuration, and they will override the
+    default field names from the data model object. The other options are incorrect
+    because they do not affect the field names in the target file. Using a formula
+    field to update the field name in an activation will not change the field name,
+    but only the field value. Updating attribute names in the data stream configuration
+    will not affect the existing data lake objects or data model objects. Updating
+    field names in the data model object will change the field names for all data
+    sources and activations that use the object, which may not be desirable or consistent.
+    Reference: Preferred Attribute Name, Create a Data Cloud Activation Target, Cloud
+    File Storage Target'
+- question_id: 46
+  question_text: データ ソースを切断する前に削除する必要がある 2 つの依存関係はどれですか?2つの回答を選択してください
+  choices:
+    A: アクティベーション対象
+    B: セグメント
+    C: アクティベーション
+    D: データストリーム
+  correct_answer: B,D
+  explanation: '* Dependencies in Data Cloud:Before disconnecting a data source, all
+    dependencies must be removed to prevent data integrity issues.Reference:* Identifying
+    Dependencies:Segment: Segments using data from the source must be deleted or reassigned.Data
+    Stream: The data stream must be disconnected, as it directly relies on the data
+    source.* Steps to Remove Dependencies:Remove Segments:Navigate to the Segmentation
+    interface in Salesforce Data Cloud.Identify and delete segments relying on the
+    data source.Disconnect Data Stream:Go to the Data Stream settings.Locate and disconnect
+    the data stream associated with the source.* Practical Application:Example: When
+    preparing to disconnect a legacy CRM system, ensure all segments and data streams
+    using its data are properly removed or migrated.'
+- question_id: 47
+  question_text: Northern Trail Outfitters のコンサルタントが、Salesforce CRM の連絡先オブジェクトから、yyyy-mm-dd
+    と yyyy-mm-dd hh:mm:ss の両方の値を含むフィールドを取り込もうとしています。ターゲット フィールドは Date データ型に設定されています。この状況では、どの記述が正しいでしょうか?
+  choices:
+    A: ターゲット フィールドはエラーをスローし、null 値を格納します。
+    B: ターゲット フィールドは両方のタイプの値を保持できます。
+    C: ターゲット フィールドには時刻部分のみが保持され、日付部分は無視されます。
+    D: ターゲット フィールドには日付部分のみが保持され、時刻部分は無視されます。
+  correct_answer: D
+  explanation: '* Field Data Types: Salesforce CRM''s Contact object fields can store
+    data in various formats. When ingesting data into Salesforce Data Cloud, the target
+    field''s data type determines how the data is processed and stored.* Date Data
+    Type: If the target field in Data Cloud is set to Date data type, it is designed
+    to store date values without time information.* Mixed Format Values: When ingesting
+    a field containing both date (yyyy-mm-dd) and datetime (yyyy-mm-dd hh:mm:ss) values
+    into a Date data type field:The Date field will extract and store only the date
+    part (yyyy-mm-dd), ignoring the time part (hh:mm:ss).* Result:Date Values: yyyy-mm-dd
+    values are stored as-is.Datetime Values: yyyy-mm-dd hh:mm:ss values are truncated
+    to yyyy-mm-dd, and the time component is ignored.* Reference:Salesforce Data Cloud
+    Field MappingSalesforce Data Types'
+- question_id: 48
+  question_text: Data Cloud の顧客は、ID 解決ルールを調整して一致の精度を高めたいと考えています。電子メール アドレスで照合するのではなく、CRM
+    連絡先とマーケティング連絡先を結合するルールを検討したいと考えています。このルールでは、両方とも CRM ID が主キーとして使用されます。この新しいユースケースに対処するためにコンサルタントは次の
+    2 つの手順を実行する必要がありますか?2 つの答えを選択してください
+  choices:
+    A: CRM ID を両方の識別名として使用して、2 つのシステムの主キーを当事者 ID にマップします。
+    B: CRM ID をCRM からの個人の識別名として使用し、マーケティング ID をマーケティング プラットフォームからの個人の識別名として使用して、2
+      つのシステムからの主キーを当事者 ID にマップします。
+    C: 個人 ID 属性に完全に一致するカスタム一致ルールを作成します。
+    D: パーティ ID 名として CRM ID に一致するパーティ ID に基づいた一致ルールを作成します。
+  correct_answer: A,D
+  explanation: 'To address this new use case, the consultant should map the primary
+    key from the two systems to Party Identification, using CRM ID as the identification
+    name for both, and create a matching rule based on party identification that matches
+    on CRM ID as the party identification name. This way, the consultant can ensure
+    that the CRM Contacts and Marketing Contacts are matched based on their CRM ID,
+    which is a unique identifier for each individual. By using Party Identification,
+    the consultant can also leverage the benefits of this attribute, such as being
+    able to match across different entities and sources, and being able to handle
+    multiple values for the same individual. The other options are incorrect because
+    they either do not use the CRM ID as the primary key, or they do not use Party
+    Identification as the attribute type. Reference: Configure Identity Resolution
+    Rulesets, Identity Resolution Match Rules, Data Cloud Identity Resolution Ruleset,
+    Data Cloud Identity Resolution Config Input'
+- question_id: 49
+  question_text: 顧客には 2 つの Data Cloud 組織があります。Data Cloud 組織の 1 つで、Amazon S3 データ ストリームとそのマッピングの新しい構成が完了し、テストされました。この構成をパッケージ化して顧客の
+    2 番目の組織に宣伝するには、何をお勧めしますか?
+  choices:
+    A: メタデータ API を使用します。
+    B: Salesforce CRM コネクタを使用します。
+    C: データキットを作成します。
+    D: AppExchange アプリケーションとしてパッケージ化します。
+  correct_answer: C
+  explanation: '* Data Cloud Configuration Promotion: When managing configurations
+    across multiple Salesforce Data Cloud orgs, it''s essential to use tools that
+    ensure consistency and accuracy in the promotion process.* Data Kits: Salesforce
+    Data Cloud allows users to package and promote configurations using data kits.
+    These kits encapsulate data stream definitions, mappings, and other configuration
+    elements into a portable format.* Process:Create a data kit in the source org
+    that includes the Amazon S3 data stream configuration and mappings.Export the
+    data kit from the source org.Import the data kit into the target org, ensuring
+    that all configurations are transferred accurately.* Advantages: Using data kits
+    simplifies the migration process, reduces the risk of configuration errors, and
+    ensures that all settings and mappings are consistently applied in the new org.*
+    Reference:Salesforce Data Cloud Developer GuideSalesforce Data Cloud Packaging'
+- question_id: 50
+  question_text: Data Cloud が CRM データを取り込む方法に関する考慮事項のうち、正しいものはどれですか?
+  choices:
+    A: CRM データは手動で更新できないため、次にスケジュールされた同期を待つ必要があります。
+    B: CRM コネクタの同期時間は、最大 15 分間隔までカスタマイズできます。
+    C: 数式フィールドは定期的な同期間隔で更新され、次回の完全更新時に更新されます。
+    D: CRM コネクタを使用すると、標準フィールドをデータ クラウドにリアルタイムでストリーミングできます。
+  correct_answer: D
+  explanation: 'The correct answer is D. The CRM Connector allows standard fields
+    to stream into Data Cloud in real time. This means that any changes to the standard
+    fields in the CRM data source are reflected in Data Cloud almost instantly, without
+    waiting for the next scheduled synchronization. This feature enables Data Cloud
+    to have the most up-to-date and accurate CRM data for segmentation and activation1.The
+    other options are incorrect for the following reasons:A . CRM data can be manually
+    refreshed at any time by clicking the Refresh button on the data stream detail
+    page2. This option is false.B . The CRM Connector''s synchronization times can
+    be customized to up to 60-minute intervals, not 15-minute intervals3. This option
+    is false.C . Formula fields are not refreshed at regular sync intervals, but only
+    at the next full refresh4. A full refresh is a complete data ingestion process
+    that occurs once every 24 hours or when manually triggered. This option is false.Reference:1:
+    Connect and Ingest Data in Data Cloud article on Salesforce Help2: Data Sources
+    in Data Cloud unit on Trailhead3: Data Cloud for Admins module on Trailhead4:
+    [Formula Fields in Data Cloud] unit on Trailhead5: [Data Streams in Data Cloud]
+    unit on Trailhead'
+- question_id: 51
+  question_text: Cumulus Financial は、Data Cloud ユーザーのために国に基づいて Salesforce CRM アカウント
+    データを分離したいと考えています。これを達成するためにコンサルタントは何をすべきでしょうか?
+  choices:
+    A: ストリーミング変換を使用して、国に基づいてアカウント データをフィルターし、それに応じて別のデータ モデル オブジェクトにマッピングします。
+    B: データ スペース機能を使用し、国に基づいてアカウント データ レイク オブジェクトにフィルターを適用します。
+    C: 取引先オブジェクトの Salesforce 共有ルールを使用して、国に基づいてレコードをフィルタリングおよび分離します。
+    D: アカウントの国フィールドに基づいて数式フィールドを使用して、受信レコードをフィルターします。
+  correct_answer: B
+  explanation: 'Data spaces are a feature that allows Data Cloud users to create subsets
+    of data based on filters and permissions. Data spaces can be used to segregate
+    data based on different criteria, such as geography, business unit, or product
+    line. In this case, the consultant can use the data spaces feature and apply filtering
+    on the Account data lake object based on Country. This way, the Data Cloud users
+    can access only the Account data that belongs to their respective countries. Reference:
+    Data Spaces, Create a Data Space'
+- question_id: 52
+  question_text: Data Cloud の新規ユーザーは、取り込まれたデータの個々の行を確認し、リンクされたデータ モデル オブジェクトに正常にモデル化されていることを検証することのみが必要です。必要に応じて、ユーザーも変更を加える必要があります。このユースケースに対応するために必要な最小限の権限セットは何ですか?
+  choices:
+    A: マーケティング スペシャリスト向けのデータ クラウド
+    B: データ クラウド管理者
+    C: データクラウドユーザー
+    D: マーケティング データ認識スペシャリスト向けデータ クラウド
+  correct_answer: C
+  explanation: 'The Data Cloud User permission set is the minimum permission set needed
+    to accommodate this use case. The Data Cloud User permission set grants access
+    to the Data Explorer feature, which allows the user to review individual rows
+    of ingested data and validate that it has been modeled successfully to its linked
+    data model object. The user can also make changes to the data model object fields,
+    such as adding or removing fields, changing field types, or creating formula fields.
+    The Data Cloud User permission set does not grant access to other Data Cloud features
+    or tasks, such as creating data streams, creating segments, creating activations,
+    or managing users. The other permission sets are either too restrictive or too
+    permissive for this use case. The Data Cloud for Marketing Specialist permission
+    set only grants access to the segmentation and activation features, but not to
+    the Data Explorer feature. The Data Cloud Admin permission set grants access to
+    all Data Cloud features and tasks, including the Data Explorer feature, but it
+    is more than what the user needs. The Data Cloud for Marketing Data Aware Specialist
+    permission set grants access to the Data Explorer feature, but also to the segmentation
+    and activation features, which are not required for this use case. Reference:
+    Data Cloud Standard Permission Sets, Data Explorer, Set Up Data Cloud Unit'
+- question_id: 53
+  question_text: Data Cloud は、前日のすべての e コマース トランザクションのファイルを毎晩受信します。いくつかのセグメントとアクティベーションは、顧客のスケジュールされたキャンペーン
+    メッセージの正確性を維持するために、更新されたデータから計算された洞察に依存します。スケジュールされたアクティベーションごとに e コマース データを確実に使用できるようにするには、コンサルタントは何をすべきでしょうか?
+  choices:
+    A: フローを使用して e コマース データの変更データ イベントをトリガーし、アクティベーションの実行がスケジュールされる前に、計算された分析情報とセグメントを更新します。
+    B: 計算された分析情報が 1 時間ごとに発生するように更新スケジュールを設定します。
+    C: アクティベーションが増分アクティベーションに設定されていることを確認し、1 時間ごとに自動的に公開します。
+    D: セグメントが高速パブリッシュに設定され、1 時間ごとに更新されるように設定されていることを確認します。
+  correct_answer: A
+  explanation: 'The best option that the consultant should do to ensure the ecommerce
+    data is ready for use for each of the scheduled activations is A. Use Flow to
+    trigger a change data event on the ecommerce data to refresh calculated insights
+    and segments before the activations are scheduled to run. This option allows the
+    consultant to use the Flow feature of Data Cloud, which enables automation and
+    orchestration of data processing tasks based on events or schedules. Flow can
+    be used to trigger a change data event on the ecommerce data, which is a type
+    of event that indicates that the data has been updated or changed. This event
+    can then trigger the refresh of the calculated insights and segments that depend
+    on the ecommerce data, ensuring that they reflect the latest data. The refresh
+    of the calculated insights and segments can be completed before the activations
+    are scheduled to run, ensuring that the customer''s scheduled campaign messages
+    are accurate and relevant.The other options are not as good as option A. Option
+    B is incorrect because setting a refresh schedule for the calculated insights
+    to occur every hour may not be sufficient or efficient. The refresh schedule may
+    not align with the activation schedule, resulting in outdated or inconsistent
+    data. The refresh schedule may also consume more resources and time than necessary,
+    as the ecommerce data may not change every hour. Option C is incorrect because
+    ensuring the activations are set to Incremental Activation and automatically publish
+    every hour may not solve the problem. Incremental Activation is a feature that
+    allows only the new or changed records in a segment to be activated, reducing
+    the activation time and size. However, this feature does not ensure that the segment
+    data is updated or refreshed based on the ecommerce data. The activation schedule
+    may also not match the ecommerce data update schedule, resulting in inaccurate
+    or irrelevant campaign messages. Option D is incorrect because ensuring the segments
+    are set to Rapid Publish and set to refresh every hour may not be optimal or effective.
+    Rapid Publish is a feature that allows segments to be published faster by skipping
+    some validation steps, such as checking for duplicate records or invalid values.
+    However, this feature may compromise the quality or accuracy of the segment data,
+    and may not be suitable for all use cases. The refresh schedule may also have
+    the same issues as option B, as it may not sync with the ecommerce data update
+    schedule or the activation schedule, resulting in outdated or inconsistent data.
+    Reference: Salesforce Data Cloud Consultant Exam Guide, Flow, Change Data Events,
+    Calculated Insights, Segments, [Activation]'
+- question_id: 54
+  question_text: キャンペーンメンバーを Salesforce CRM のキャンペーンにインポートするために、ユーザーはセグメントを Amazon
+    S3 にエクスポートしたいと考えています。結果のファイルには、名前に Salesforce CRM キャンペーン ID が含まれている必要があります。この結果を達成するための
+    2 つの方法は何ですか?2 つの答えを選択してください
+  choices:
+    A: アクティベーション名にキャンペーン識別子を含めます。
+    B: キャンペーン識別子をキャンペーンのアクティベーションの新しい属性としてハードコードします。
+    C: ファイル名仕様にキャンペーン識別子を含めます。
+    D: セグメント名にキャンペーン識別子を含めます。
+  correct_answer: A,C
+  explanation: The two ways to achieve this outcome are A and C. Include campaign
+    identifier in the activation name and include campaign identifier in the filename
+    specification. These two options allow the user to specify the Salesforce CRM
+    Campaign ID in the name of the file that is exported to Amazon S3. The activation
+    name and the filename specification are both configurable settings in the activation
+    wizard, where the user can enter the campaign identifier as a text or a variable.
+    The activation name is used as the prefix of the filename, and the filename specification
+    is used as the suffix of the filename. For example, if the activation name is
+    "Campaign_123" and the filename specification is "{segmentName}_{date}", the resulting
+    file name will be "Campaign_123_SegmentA_2023-12-18.csv". This way, the user can
+    easily identify the file that corresponds to the campaign and import it into Salesforce
+    CRM.The other options are not correct. Option B is incorrect because hard coding
+    the campaign identifier as a new attribute in the campaign activation is not possible.
+    The campaign activation does not have any attributes, only settings. Option D
+    is incorrect because including the campaign identifier in the segment name is
+    not sufficient. The segment name is not used in the filename of the exported file,
+    unless it is specified in the filename specification. Therefore, the user will
+    not be able to see the campaign identifier in the file name.
+- question_id: 55
+  question_text: Cumulus Financial は、計算された洞察を使用して、富裕層顧客の支店ごとの合計銀行価値を計算します。計算されたインサイトでは、「銀行価値」が指標、「支店」がディメンション、「富裕層」がフィルターになります。アクティベーションの属性として何を含めることができますか?
+  choices:
+    A: 「富裕層」 (フィルター)
+    B: 「支店」 (ディメンション) および「銀行メトリック」)
+    C: '"銀行価値" (メトリック)'
+    D: '"枝" (次元)'
+  correct_answer: D
+  explanation: 'According to the Salesforce Data Cloud documentation, an attribute
+    is a dimension or a measure that can be used in activation. A dimension is a categorical
+    variable that can be used to group or filter data, such as branch, region, or
+    product. A measure is a numerical variable that can be used to calculate metrics,
+    such as revenue, profit, or count. A filter is a condition that can be applied
+    to limit the data that is used in a calculated insight, such as high net worth,
+    age range, or gender. In this question, the calculated insight uses "banking value"
+    as a metric, which is a measure, and "branch" as a dimension. Therefore, only
+    "branch" can be included as an attribute in activation, since it is a dimension.
+    The other options are either measures or filters, which are not attributes. Reference:
+    Data Cloud Permission Sets, Salesforce Data Cloud Exam Questions'
+- question_id: 56
+  question_text: Cloud Kicks は、既存のデータ ストリームの 1 つとその基盤となるデータ レイク オブジェクト (DLO) を完全に削除する予定です。データ
+    ストリームを削除する前にコンサルタントは何を考慮すべきでしょうか?
+  choices:
+    A: 基礎となる DLO はデータ変換で使用できます。
+    B: 基になる DLO をデータ モデル オブジェクトにマップできません。
+    C: データ ストリームはデータ キットに関連付ける必要があります。
+    D: 基になる DLO を暗黙的に削除せずにデータ ストリームを削除できます。
+  correct_answer: A
+  explanation: '* Data Streams and DLOs: In Salesforce Data Cloud, data streams are
+    used to ingest data, which is then stored in Data Lake Objects (DLOs).* Deletion
+    Considerations: Before deleting a data stream, it''s crucial to consider the dependencies
+    and usage of the underlying DLO.* Data Transform Usage:Impact of Deletion: If
+    the underlying DLO is used in a data transform, deleting the data stream will
+    affect any transforms relying on that DLO.Dependency Check: Ensure that the DLO
+    is not part of any active data transformations or processes that could be disrupted
+    by its deletion.* Reference:Salesforce Data Cloud Documentation: Data StreamsSalesforce
+    Data Cloud Documentation: Data Transforms'
+- question_id: 57
+  question_text: セグメンテーションと計算されたインサイトで日付と時刻に基づく操作にデータセットを使用するには、どのデータ ストリーム カテゴリ タイプを割り当てる必要がありますか?
+  choices:
+    A: 個人
+    B: エンゲージメント
+    C: 販売注文
+    D: プロフィール
+  correct_answer: B
+  explanation: 'To use a dataset for date and time-based operations in segmentation
+    and calculated insights, the data stream category type should be assigned as Engagement
+    . Here''s why:Understanding the RequirementThe goal is to perform date and time-based
+    operations (e.g., filtering customers based on specific dates or times) in segmentation
+    and calculated insights.This requires a data stream category that captures customer
+    interactions or activities over time.Why Engagement?Engagement Data Streams :Engagement
+    data streams are designed to capture customer interactions, such as website visits,
+    email opens, purchases, or other time-based activities.These streams inherently
+    include timestamps, making them ideal for date and time-based operations.Use in
+    Segmentation and Calculated Insights :Segmentation often involves filtering customers
+    based on their engagement behavior (e.g., "customers who visited the website in
+    the last 7 days").Calculated insights leverage engagement data to derive metrics
+    like recency, frequency, and trends over time.Other Categories Are Less Suitable
+    :Individual : Focuses on demographic or static attributes (e.g., name, age) rather
+    than time-based interactions.Sales Order : Captures transactional data but is
+    not optimized for general engagement-based operations.Profile : Represents unified
+    customer profiles and does not directly support date and time-based operations.Steps
+    to Implement This SolutionStep 1: Assign the Correct CategoryWhen setting up the
+    data stream, assign the Engagement category to ensure it is optimized for time-based
+    operations.Step 2: Map Date-Time FieldsEnsure that relevant fields (e.g., interaction
+    timestamps) are mapped correctly during ingestion.Step 3: Use in Segmentation
+    and InsightsLeverage the ingested engagement data for segmentation (e.g., "customers
+    who engaged in the last 24 hours") and calculated insights (e.g., "average time
+    between interactions").ConclusionThe Engagement category is specifically designed
+    for capturing time-based interactions, making it the best choice for datasets
+    used in date and time-based operations in segmentation and calculated insights.'
+- question_id: 58
+  question_text: クライアントは、同じレコード内に蓄積されたホテル ポイントと航空会社のポイントのポイント残高を含む Salesforce CRM
+    のカスタム オブジェクトからロイヤルティ データを取り込みたいと考えています。クライアントは、追跡と処理を改善するために、これらのポイント システムを 2
+    つの別々のレコードに分割したいと考えています。このシナリオでコンサルタントは何を推奨すべきでしょうか?
+  choices:
+    A: データ ソース オブジェクトのクローンを作成します。
+    B: バッチ変換を使用して 2 番目のデータ レイク オブジェクトを作成します。
+    C: Salesforce CRM でジャンクション オブジェクトを作成し、取り込み戦略を変更します。
+    D: データレイク オブジェクトからデータキットを作成し、同じデータクラウド組織にデプロイします。
+  correct_answer: B
+  explanation: 'Batch transforms are a feature that allows creating new data lake
+    objects based on existing data lake objects and applying transformations on them.
+    This can be useful for splitting, merging, or reshaping data to fit the data model
+    or business requirements. In this case, the consultant can use batch transforms
+    to create a second data lake object that contains only the airline points from
+    the original loyalty data object. The original object can be modified to contain
+    only the hotel points. This way, the client can have two separate records for
+    each point system and track and process them accordingly. Reference: Batch Transforms,
+    Create a Batch Transform'
+- question_id: 59
+  question_text: 顧客は、最近統合率が上昇していることに気付きました。コンサルタントに連絡して、その理由を尋ねました。この増加の理由として考えられる
+    2 つのことは何でしょうか?2つの回答を選択してください
+  choices:
+    A: 既存のプロファイルと大部分が重複する新しいデータ ソースが Data Cloud に追加されました。
+    B: ソース システム データ ストリームから重複が削除されました。
+    C: 一致するプロファイルの数を減らすために、ID 解決ルールが削除されました。
+    D: 一致するIDの数を増やすために、ルールセットにID解決ルールが追加されました。
+  correct_answer: A,D
+  explanation: profiles.Explanation:The consolidation rate is a metric that measures
+    the amount by which source profiles are combined to produce unified profiles in
+    Data Cloud, calculated as 1 - (number of unified profiles / number of source profiles).
+    A higher consolidation rate means that more source profiles are matched and merged
+    into fewer unified profiles, while a lower consolidation rate means that fewer
+    source profiles are matched and more unified profiles are created. There are two
+    likely explanations for why the consolidation rate has recently increased for
+    a customer:New data sources have been added to Data Cloud that largely overlap
+    with the existing profiles. This means that the new data sources contain many
+    profiles that are similar or identical to the profiles from the existing data
+    sources. For example, if a customer adds a new CRM system that has the same customer
+    records as their old CRM system, the new data source will overlap with the existing
+    one. When Data Cloud ingests the new data source, it will use the identity resolution
+    ruleset to match and merge the overlapping profiles into unified profiles, resulting
+    in a higher consolidation rate.Identity resolution rules have been added to the
+    ruleset to increase the number of matched profiles. This means that the customer
+    has modified their identity resolution ruleset to include more match rules or
+    more match criteria that can identify more profiles as belonging to the same individual.
+    For example, if a customer adds a match rule that matches profiles based on email
+    address and phone number, instead of just email address, the ruleset will be able
+    to match more profiles that have the same email address and phone number, resulting
+    in a higher consolidation rate.
+- question_id: 60
+  question_text: ノーザン トレイル アウトフィッターズは B2C Commerce を使用しており、顧客とそのすべての注文トランザクションを統一的に把握するために
+    Data Cloud の実装を検討しています。B2C Commerce Order Bundle を使用して注文データを取り込む履歴データに関して、コンサルタントはどのようなことに留意する必要がありますか?
+  choices:
+    A: B2C Commerce Order Bundle は、12 か月分の履歴データを取り込みます。
+    B: B2C Commerce Order Bundle は 6 か月分の履歴データを取り込みます。
+    C: B2C Commerce Order Bundle は履歴データを取り込まず、その時点以降の新しい注文のみを取り込みます。
+    D: B2C Commerce Order Bundle は 30 日間の履歴データを取り込みます。
+  correct_answer: C
+  explanation: The B2C Commerce Order Bundle is a data bundle that creates a data
+    stream to flow order data from a B2C Commerce instance to Data Cloud. However,
+    this data bundle does not ingest any historical data and only ingests new orders
+    from the time the data stream is created. Therefore, if a consultant wants to
+    ingest historical order data, they need to use a different method, such as exporting
+    the data from B2C Commerce and importing it to Data Cloud using a CSV file12.
+    Reference:Create a B2C Commerce Data BundleData Access and Export for B2C Commerce
+    and Commerce Marketplace
+- question_id: 61
+  question_text: ノーザン トレイル アウトフィッターズは、データ クラウド インスタンスで個人を統合します。CA コンサルタントが統合プロファイルのデータを検証するために使用する
+    3 つの機能はどれですか?3 つの答えを選択してください
+  choices:
+    A: ID 解決
+    B: APL のクエリ
+    C: データ エクスプローラー
+    D: プロファイル エクスプローラー
+    E: データアクション
+  correct_answer: A,C,D
+  explanation: 'To validate the data on a unified profile, the consultant can use
+    the following features:Identity Resolution: This feature allows the consultant
+    to view and edit the identity resolution rulesets that determine how individuals
+    are unified from different data sources1.Data Explorer: This feature allows the
+    consultant to browse and filter the unified profiles and view their attributes,
+    segments, and activities2.Profile Explorer: This feature allows the consultant
+    to drill down into a specific unified profile and view its details, such as source
+    records, identity graph, calculated insights, and data actions3. Reference:1:
+    Identity Resolution in Data Cloud2: Data Explorer in Data Cloud3: Profile Explorer
+    in Data Cloud'
+- question_id: 62
+  question_text: ユーザーは Data Cloud にセグメントを構築し、アクティベーションを作成中です。関連する属性を選択するときに、個人に関連するとわかっている特定の属性セットを見つけることができません。これらの属性が使用できない理由を説明しているのはどれですか?
+  choices:
+    A: セグメントはプロファイル データでセグメント化されていません。
+    B: 属性は別のアクティベーションで使用されています。
+    C: 必要な属性は、異なる関連パス上に存在します。
+    D: アクティベーションには 1 対 1 の属性のみを含めることができます。
+  correct_answer: C
+  explanation: 'The correct answer is C, the desired attributes reside on different
+    related paths. When creating an activation in Data Cloud, you can select related
+    attributes from data model objects that are linked to the segment entity. However,
+    not all related attributes are available for every activation. The availability
+    of related attributes depends on the container path, which is the sequence of
+    data model objects that connects the segment entity to the related entity. For
+    example, if you segment on the Unified Individual entity, you can select related
+    attributes from the Order Product entity, but only if the container path is Unified
+    Individual > Order > Order Product. If the container path is Unified Individual
+    > Order Line Item > Order Product, then the related attributes from Order Product
+    are not available for activation. This is because Data Cloud only supports one-to-many
+    relationships for related attributes, and Order Line Item is a many-to-many junction
+    object between Order and Order Product. Therefore, you need to ensure that the
+    desired attributes reside on the same related path as the segment entity, and
+    that the path does not include any many-to-many junction objects. The other options
+    are incorrect because they do not explain why the related attributes are not available.
+    The segment entity can be any data model object, not just profile data. The attributes
+    are not restricted by being used in another activation. Activations can include
+    one-to-many attributes, not just one-to-one attributes. Reference:Related Attributes
+    in ActivationConsiderations for Selecting Related AttributesSalesforce Launches:
+    Data Cloud Consultant CertificationCreate a Segment in Data Cloud'
+- question_id: 63
+  question_text: 自動車ディーラーはデータクラウドを実装したいと考えています。Data Cloud の機能の使用例は何ですか?
+  choices:
+    A: バージョン管理を備えた完全なアーカイブ ソリューションを実装します。
+    B: ブラウザの Cookie を使用して、Web サイト上の訪問者のアクティビティを追跡し、パーソナライズされた推奨事項を表示します。
+    C: 統合されたすべての個人にわたる同意管理のための真実のソースを構築します。
+    D: さまざまなタッチポイントにわたる顧客とのやり取りを取り込み、調整し、分析レポート用のデータ モデルを構築します。
+  correct_answer: D
+  explanation: 'The most relevant use case for implementing Salesforce Data Cloud
+    in an automotive dealership is ingesting customer interactions across different
+    touchpoints, harmonizing the data, and building a data model for analytical reporting
+    . Here''s why:1. Understanding the Use CaseSalesforce Data Cloud is designed to
+    unify customer data from multiple sources, harmonize it into a single view, and
+    enable actionable insights through analytics and segmentation. For an automotive
+    dealership, this means:Collecting data from various touchpoints such as website
+    visits, service appointments, test drives, and marketing campaigns.Harmonizing
+    this data into a unified profile for each customer.Building a data model that
+    supports advanced analytical reporting to drive business decisions.This use case
+    aligns perfectly with Data Cloud''s core capabilities, making it the most appropriate
+    choice.2. Why Not Other Options?Option A: Implement a full archive solution with
+    version management.Salesforce Data Cloud is not primarily an archiving or version
+    management tool. While it can store historical data, its focus is on unifying
+    and analyzing customer data rather than providing a full-fledged archival solution
+    with version control.Tools like Salesforce Shield or external archival systems
+    are better suited for this purpose.Option B: Use browser cookies to track visitor
+    activity on the website and display personalized recommendations.While Salesforce
+    Data Cloud can integrate with tools like Marketing Cloud Personalization (Interaction
+    Studio) to deliver personalized experiences, it does not directly manage browser
+    cookies or real-time web tracking.This functionality is typically handled by specialized
+    tools like Interaction Studio or third-party web analytics platforms.Option C:
+    Build a source of truth for consent management across all unified individuals.While
+    Data Cloud can help manage unified customer profiles, consent management is better
+    handled by Salesforce''s Consent Management Framework or other dedicated compliance
+    tools.Data Cloud focuses on data unification and analytics, not specifically on
+    consent governance.3. How Data Cloud Supports Option DHere''s how Salesforce Data
+    Cloud enables the selected use case:Step 1: Ingest Customer InteractionsData Cloud
+    connects to various data sources, including CRM systems, websites, mobile apps,
+    and third-party platforms.For an automotive dealership, this could include:Website
+    interactions (e.g., browsing vehicle models).Service center visits and repair
+    history.Test drive bookings and purchase history.Marketing campaign responses.Step
+    2: Harmonize DataData Cloud uses identity resolution to unify customer data from
+    different sources into a single profile for each individual.For example, if a
+    customer interacts with the dealership via email, phone, and in-person visits,
+    Data Cloud consolidates these interactions into one unified profile.Step 3: Build
+    a Data ModelData Cloud allows you to create a data model that organizes customer
+    attributes and interactions in a structured way.This model can be used to analyze
+    customer behavior, segment audiences, and generate reports.For instance, the dealership
+    could identify customers who frequently visit the service center but haven''t
+    purchased a new vehicle recently, enabling targeted upsell campaigns.Step 4: Enable
+    Analytical ReportingOnce the data is harmonized and modeled, it can be used for
+    advanced analytics and reporting.Reports might include:Customer lifetime value
+    (CLV).Campaign performance metrics.Trends in customer preferences (e.g., interest
+    in electric vehicles).4. Salesforce Documentation ReferenceAccording to Salesforce''s
+    official Data Cloud documentation:Data Cloud is designed to unify customer data
+    from multiple sources, enabling businesses to gain a 360-degree view of their
+    customers.It supports harmonization of data into a single profile and provides
+    tools for segmentation and analytical reporting .These capabilities make it ideal
+    for industries like automotive dealerships, where understanding customer interactions
+    across touchpoints is critical for driving sales and improving customer satisfaction.'
+- question_id: 64
+  question_text: 複数のデータ ソースを持ち、個人に関するデータを単一の統合プロファイルに照合および調整する必要がある顧客に対して、調査中にコンサルタントはどの機能を強調すべきでしょうか?
+  choices:
+    A: ハーモナイゼーション
+    B: データ クレンジング
+    C: データ統合
+    D: ID 解決
+  correct_answer: D
+  explanation: 'The feature that the consultant should highlight for a customer who
+    has multiple data sources and needs to match and reconcile data about individuals
+    into a single unified profile is D. Identity Resolution. Identity Resolution is
+    the process of identifying, matching, and reconciling data about individuals across
+    different data sources and creating a unified profile that represents a single
+    view of the customer. Identity Resolution uses various methods and rules to determine
+    the best match and reconciliation of data, such as deterministic matching, probabilistic
+    matching, reconciliation rules, and identity graphs. Identity Resolution enables
+    the customer to have a complete and accurate understanding of their customers
+    and their interactions across different channels and touchpoints. Reference: Salesforce
+    Data Cloud Consultant Exam Guide, Identity Resolution'
+- question_id: 65
+  question_text: コンサルタントは、キャンペーン計画のためのセグメントの実際のサイズを決定するために、Data Cloud セグメントの人口と Marketing
+    Cloud データ拡張数の差を最小限に抑える必要があります。これを実現するために、コンサルタントはセグメントをフィルタリングするために何を推奨すべきでしょうか?
+  choices:
+    A: マーケティングアウトリーチのユーザー設定
+    B: マーケティングクラウドジャーニー
+    C: 地理的区分
+    D: ビジネスユニット
+  correct_answer: C
+  explanation: ''
+- question_id: 66
+  question_text: Data Cloud コンサルタントは、整理されたクリーンなデータを扱っています。ただし、さまざまなスキーマがユーザー、連絡先、サブスクライバーなど複数の名前で人物を参照しているため、標準的なマッピングが必要です。これらのさまざまなスキーマ
+    ポイントを標準データ モデルにマッピングするプロセスを説明する用語はどれですか。
+  choices:
+    A: セグメント
+    B: 調和する
+    C: 統合
+    D: 変換
+  correct_answer: B
+  explanation: '* Introduction to Data Harmonization:Data harmonization is the process
+    of bringing together data from different sources and making it consistent.Reference:*
+    Mapping Different Schema Points:In Data Cloud, different schemas may refer to
+    the same entity using different names (e.g., user, contact, subscriber).Harmonization
+    involves standardizing these different terms into a single, consistent schema.*
+    Process of Harmonization:Identify Variations: Recognize the different names and
+    fields referring to the same entity across schemas.Standard Mapping: Create a
+    standard data model and map the various schema points to this model.Example: Mapping
+    "user", "contact", and "subscriber" to a single standard entity like "Customer."*
+    Steps to Harmonize Data:Define a standard data model.Map the fields from different
+    schemas to this standard model.Ensure consistency across the data ecosystem.'
+- question_id: 67
+  question_text: Cumulus Financial は、ビジネス ローンと個人ローンの両方を提供しています。個人顧客はビジネス ローンと個人ローンの両方を持っている可能性があるため、連絡先
+    DLO の記録は両方のグループに役立ちます。ただし、法的な理由により、2 つのグループは別々に保持する必要があります。Cumulus Financial はこのビジネス要件をどのように解決すべきでしょうか?
+  choices:
+    A: 個別DM0を複製します。
+    B: 連絡先 DLO を複製します。
+    C: 同じデータ スペースに 2 つの ID 解決ルールを作成します。
+    D: 2 つのデータ スペースを使用します。
+  correct_answer: D
+  explanation: 'To address the business requirement where Cumulus Financial needs
+    to keep business and personal loan records separate for legal reasons while still
+    leveraging the same Contact DLO, the best solution is to use two data spaces .
+    Here''s why and how this works:Understanding Data Spaces in Salesforce Data Cloud
+    :Data spaces are logical containers within Salesforce Data Cloud that allow organizations
+    to segment their data based on specific business needs, compliance requirements,
+    or privacy regulations. They enable isolation of data processing and identity
+    resolution rules while still allowing access to shared data objects like the Contact
+    DLO.Why Two Data Spaces?By creating two data spaces (e.g., one for business loans
+    and another for personal loans), Cumulus Financial can maintain separation between
+    the two groups for legal compliance.Both data spaces can reference the same Contact
+    DLO, ensuring that individual customer data is not duplicated but is accessible
+    in both contexts.Identity resolution rules can be configured independently within
+    each data space to ensure that the segmentation aligns with the legal requirements.Steps
+    to Implement This Solution :Step 1: Navigate to the Data Spaces section in Salesforce
+    Data Cloud.Step 2: Create two new data spaces: one for "Business Loans" and another
+    for "Personal Loans." Step 3: Configure the identity resolution rules separately
+    for each data space to ensure proper segmentation.Step 4: Link the existing Contact
+    DLO to both data spaces. This ensures that the same contact data is available
+    in both contexts without duplication.Step 5: Set up activation rules and permissions
+    to ensure that data from one data space cannot inadvertently mix with the other.Why
+    Not Other Options?A . Duplicate the Individual DMO: This would lead to unnecessary
+    duplication of data and increase storage costs. It also introduces complexity
+    in maintaining consistency across duplicated records.B . Duplicate the Contact
+    DLO: Similar to duplicating the DMO, this approach increases storage and maintenance
+    overhead without solving the core issue of legal separation.C . Create two identity
+    resolution rules in the same data space: While this might seem like a viable option,
+    it does not provide the required legal separation since both groups would still
+    exist within the same data space.By using two data spaces, Cumulus Financial achieves
+    the necessary legal separation while maintaining efficiency and avoiding data
+    redundancy.'
+- question_id: 68
+  question_text: 世界的なファッション小売業者は、AMFR、FMFA、APAC 全体でオンライン販売プラットフォームを運営しています。顧客、注文、製品情報のデータ形式は地域によって異なり、コンプライアンス規制では、元のデータ
+    ソースでデータを変更せずに維持することが求められています。また、リアルタイムのパーソナライゼーションと分析のために、顧客プロファイルの統一されたビューも必要です。これらの要件を考慮すると、企業は受信データ
+    ストリームを標準化およびクレンジングするためにどのような変換アプローチを実装する必要がありますか?
+  choices:
+    A: ストリーミング データ変換を実装します。
+    B: バッチデータ変換を実装します。
+    C: Data Cloud に取り込む前にデータを変換します。
+    D: Apex を使用してデータを変換およびクレンジングします。
+  correct_answer: B
+  explanation: 'Given the requirements to standardize and cleanse incoming data streams
+    while keeping the original data unchanged in compliance with regional regulations,
+    the best approach is to implement batch data transformations . Here''s why:Understanding
+    the RequirementsThe global fashion retailer operates across multiple regions (AMER,
+    EMEA, APAC), each with varying data formats for customer, order, and product information.Compliance
+    regulations require the original data to remain unchanged in the source systems.The
+    company needs a unified view of customer profiles for real-time personalization
+    and analytics.Why Batch Data Transformations?Batch Transformations for Standardization
+    :Batch data transformations allow you to process large volumes of data at scheduled
+    intervals.They can standardize and cleanse data (e.g., converting different date
+    formats, normalizing product names) without altering the original data in the
+    source systems.Compliance with Regulations :Since the original data remains unchanged
+    in the source systems, batch transformations comply with regional regulations.The
+    transformed data is stored in a separate layer (e.g., a new Data Lake Object or
+    Unified Profile) for downstream use.Unified Customer Profiles :After transformation,
+    the cleansed and standardized data can be used to create a unified view of customer
+    profiles in Salesforce Data Cloud.This enables real-time personalization and analytics
+    across regions.Steps to Implement This SolutionStep 1: Identify Transformation
+    NeedsAnalyze the differences in data formats across regions (e.g., date formats,
+    currency, product IDs).Define the rules for standardization and cleansing (e.g.,
+    convert all dates to ISO format, normalize product names).Step 2: Create Batch
+    TransformationsUse Data Cloud''s Batch Transform feature to apply the defined
+    rules to incoming data streams.Schedule the transformations to run at regular
+    intervals (e.g., daily or hourly).Step 3: Store Transformed Data SeparatelyStore
+    the transformed data in a new Data Lake Object (DLO) or Unified Profile.Ensure
+    the original data remains untouched in the source systems.Step 4: Enable Unified
+    ProfilesUse the transformed data to create a unified view of customer profiles
+    in Salesforce Data Cloud.Leverage this unified view for real-time personalization
+    and analytics.Why Not Other Options?A . Implement streaming data transformations
+    :Streaming transformations are designed for real-time processing but may not be
+    suitable for large-scale standardization and cleansing tasks. Additionally, they
+    might not align with compliance requirements to keep the original data unchanged.C
+    . Transform data before ingesting into Data Cloud :Transforming data before ingestion
+    would require modifying the original data in the source systems, violating compliance
+    regulations.D . Use Apex to transform and cleanse data :Using Apex is overly complex
+    and resource-intensive for this use case. Batch transformations are a more efficient
+    and scalable solution.ConclusionBy implementing batch data transformations , the
+    global fashion retailer can standardize and cleanse its data while complying with
+    regional regulations and enabling a unified view of customer profiles for real-time
+    personalization and analytics.'
+- question_id: 69
+  question_text: コンサルタントがセグメント エラーのトラブルシューティングを行っています。ネストされたセグメントの代わりに計算されたインサイトを使用すると、どのエラー
+    メッセージが解決されますか?
+  choices:
+    A: セグメントが複雑すぎます。
+    B: 複数の人口カウントが進行中です。
+    C: セグメントのポピュレーションカウントに失敗しました。
+    D: セグメントを公開できません。
+  correct_answer: A
+  explanation: '* Segment Errors in Data Cloud: Segments in Salesforce Data Cloud
+    can encounter errors due to various reasons, including complexity and nested segments.*
+    Calculated Insights vs. Nested Segments:Complex Segments: If a segment is too
+    complex due to extensive nesting or numerous conditions, it can lead to errors.Simplification
+    with Calculated Insights: Using calculated insights can simplify segment creation
+    by pre-computing and storing complex logic or aggregations, which can then be
+    referenced directly in the segment.* Solution:Step 1: Identify the segment causing
+    the "Segment is too complex" error.Step 2: Break down complex logic into calculated
+    insights.Step 3: Use these calculated insights in segment definitions to reduce
+    complexity.* Reference:Salesforce Data Cloud Calculated InsightsSalesforce Data
+    Cloud Segment Creation'
+- question_id: 70
+  question_text: Cumulus Financial は、Data Cloud を使用して銀行顧客をセグメント化し、Cloud File Storage
+    アクティベーションを介してダイレクト メール用に顧客をアクティベートします。同社は、過去 2 年以内にこのセグメントに所属していた個人も分析したいと考えています。どのデータ
+    クラウド コンポーネントがこれを可能にしますか?
+  choices:
+    A: ネストされたセグメント
+    B: セグメントの除外
+    C: 計算された洞察
+    D: セグメント メンバーシップ データ モデル オブジェクト
+  correct_answer: D
+  explanation: 'The segment membership data model object is a Data Cloud component
+    that allows for analyzing individuals who have been in a segment within a certain
+    time period. The segment membership data model object is a table that stores the
+    information about which individuals belong to which segments and when they were
+    added or removed from the segments. This object can be used to create calculated
+    insights, such as segment size, segment duration, segment overlap, or segment
+    retention, that can help measure the effectiveness of segmentation and activation
+    strategies. The segment membership data model object can also be used to create
+    nested segments or segment exclusions based on the segment membership criteria,
+    such as segment name, segment type, or segment date range. The other options are
+    not correct because they are not Data Cloud components that allow for analyzing
+    individuals who have been in a segment within the last 2 years. Nested segments
+    and segment exclusions are features that allow for creating more complex segments
+    based on existing segments, but they do not provide the historical data about
+    segment membership. Calculated insights are custom metrics or measures that are
+    derived from data model objects or data lake objects, but they do not store the
+    segment membership information by themselves. Reference: Segment Membership Data
+    Model Object, Create a Calculated Insight, Create a Nested Segment'
+- question_id: 71
+  question_text: コンサルタントは、設定した ID 解決を確認したいと考えています。統合プロファイルのデータを検証するためにコンサルタントが使用できる
+    2 つの機能はどれですか。2つの回答を選択してください
+  choices:
+    A: アイデンティティ解決
+    B: データアクション
+    C: データエクスプローラー
+    D: クエリ API
+  correct_answer: C,D
+  explanation: 'To validate the data on a unified profile after setting up identity
+    resolution, the consultant can use Data Explorer and the Query API . Here''s why:Understanding
+    Identity Resolution ValidationIdentity resolution combines data from multiple
+    sources into a unified profile.Validating the unified profile ensures that the
+    resolution process is working correctly and that the data is accurate.Why Data
+    Explorer and Query API?Data Explorer :Data Explorer is a built-in tool in Salesforce
+    Data Cloud that allows users to view and analyze unified profiles.It provides
+    a detailed view of individual profiles, including resolved identities and associated
+    attributes.Query API :The Query API enables programmatic access to unified profiles
+    and related data.Consultants can use the API to query specific profiles and validate
+    the results of identity resolution programmatically.Other Options Are Less Suitable
+    :A . Identity Resolution : This refers to the process itself, not a tool for validation.B
+    . Data Actions : Data actions are used to trigger workflows or integrations, not
+    for validating unified profiles.Steps to Validate Unified ProfilesUsing Data Explorer
+    :Navigate to Data Cloud > Data Explorer .Search for a specific profile and review
+    its resolved identities and attributes.Verify that the data aligns with expectations
+    based on the identity resolution rules.Using Query API :Use the Query API to retrieve
+    unified profiles programmatically.Compare the results with expected outcomes to
+    confirm accuracy.ConclusionThe consultant should use Data Explorer and the Query
+    API to validate the data on unified profiles, ensuring that identity resolution
+    is functioning as intended.'
+- question_id: 72
+  question_text: コンサルタントは、設定した ID 解決を確認したいと考えています。統合プロファイルのデータを検証するためにコンサルタントが使用できる
+    2 つの機能はどれですか。2つの回答を選択してください
+  choices:
+    A: データアクション
+    B: データエクスプローラー
+    C: クエリ API
+    D: アイデンティティ解決
+  correct_answer: B,C
+  explanation: ''
+- question_id: 73
+  question_text: コンサルタントは、美容会社がプロフィール データを Data Cloud に取り込むのを支援しています。同社のソース データには、目の色、肌の種類、髪の色など、標準の個人データ
+    モデル オブジェクト (DMO) のフィールドではないフィールドがいくつか含まれています。セグメンテーションと ID 解決の両方に使用するためにこのデータをマッピングするには、コンサルタントは何を推奨する必要がありますか?
+  choices:
+    A: 必要なフィールドをすべて含むカスタム DMO を最初から作成します。
+    B: 追加フィールドのみを含むカスタム DMO を作成し、それを標準の個別 DMO にマッピングします。
+    C: 標準の個別 DMO でカスタム フィールドを作成します。
+    D: 標準の個別 DMO を複製し、フィールドを追加します。
+  correct_answer: C
+  explanation: 'The best option to map the data to be used for both segmentation and
+    identity resolution is to create custom fields on the standard Individual DMO.
+    This way, the consultant can leverage the existing fields and functionality of
+    the Individual DMO, such as identity resolution rulesets, calculated insights,
+    and data actions, while adding the additional fields that are specific to the
+    beauty company''s data1. Creating a custom DMO from scratch or duplicating the
+    standard Individual DMO would require more effort and maintenance, and might not
+    be compatible with the existing features of Data Cloud. Creating a custom DMO
+    with only the additional fields and mapping it to the standard Individual DMO
+    would create unnecessary complexity and redundancy, and might not allow the use
+    of the custom fields for identity resolution. Reference:1: Data Model Objects
+    in Data Cloud'
+- question_id: 74
+  question_text: Cumulus Financial は、各顧客の毎日の取引量をリアルタイムで追跡し、顧客の通常の範囲を超える取引量を検出するとすぐに通知を送信できるようにしたいと考えています。この要求に応えるためにコンサルタントは何をすべきでしょうか?
+  choices:
+    A: 計算された分析情報をフローと組み合わせて使用​​します。
+    B: フローでストリーミング データ変換を使用します。
+    C: データ アクションと組み合わせたストリーミング インサイトを使用します
+    D: ストリーミング データ変換をデータ アクションと組み合わせて使用​​します。
+  correct_answer: C
+  explanation: 'A streaming insight is a type of insight that analyzes streaming data
+    in real time and triggers actions based on predefined conditions. A data action
+    is a type of action that executes a flow, a data action target, or a data action
+    script when an insight is triggered. By using a streaming insight paired with
+    a data action, a consultant can accommodate Cumulus Financial''s request to track
+    the daily transaction volume of each customer and send out a notification when
+    the volume is outside the normal range. A calculated insight is a type of insight
+    that performs calculations on data in a data space and stores the results in a
+    data extension. A streaming data transform is a type of data transform that applies
+    transformations to streaming data in real time and stores the results in a data
+    extension. A flow is a type of automation that executes a series of actions when
+    triggered by an event, a schedule, or another flow. None of these options can
+    achieve the same functionality as a streaming insight paired with a data action.
+    Reference: Use Insights in Data Cloud Unit, Streaming Insights and Data Actions
+    Use Cases, Streaming Insights and Data Actions Limits and Behaviors'
